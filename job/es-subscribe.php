@@ -4,37 +4,57 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+if ( !class_exists( 'es_cls_job_subscribe' ) ) {
+	class es_cls_job_subscribe {
 
-class es_cls_job_subscribe {
-
-	public function __construct() {
-		if ( defined( 'DOING_AJAX' ) && true === DOING_AJAX ) {
-			add_action( 'wp_ajax_es_add_subscriber', array( $this, 'es_add_subscriber' ) );
-			add_action( 'wp_ajax_nopriv_es_add_subscriber', array( $this, 'es_add_subscriber' ) );
+		public function __construct( $isActionsNeeded ) {
+			if ( defined( 'DOING_AJAX' ) && (true === DOING_AJAX)  && (true === $isActionsNeeded) ) {
+				add_action( 'wp_ajax_es_add_subscriber', array( $this, 'es_add_subscriber' ), 10 );
+				add_action( 'wp_ajax_nopriv_es_add_subscriber', array( $this, 'es_add_subscriber' ), 10 );
+			}
 		}
-	}
+		public static  function getInstance( $isActionsNeeded =  true){
+		   static $es_cls_job_subscribe_obj = null;
+	        if (null === $es_cls_job_subscribe_obj) {
+	            $es_cls_job_subscribe_obj = new es_cls_job_subscribe($isActionsNeeded);
+	        }
+	        return $es_cls_job_subscribe_obj;
+		}
 
-	public function es_add_subscriber() {
 
-		$es_response = array();
-		$homeurl = home_url();
-		$homeurl_host = (!empty($homeurl)) ?  parse_url($homeurl, PHP_URL_HOST) : '';
-		$referer = wp_get_referer();
-		$referer_host = (!empty($referer)) ? parse_url($referer, PHP_URL_HOST) : '';
+		public function es_add_subscriber( ) {
+			$es_response = $this->es_add_subscribers_db();
+			echo json_encode($es_response);
+			die();
+		}
 
-		if ( !empty($homeurl_host) && !empty($referer_host) && $referer_host === $homeurl_host) {
+		public function es_add_subscribers_db(){
+			$es_response = array();
+			//honey-pot validation
+			if(!empty($_POST['es_required_field'])){
+				$es_response['error'] = 'unexpected-error';
+				return $es_response;
+				
+			}
+			//block address list
+			$es_disposable_list = array('\.ru');
+			if(preg_match('/('.implode('|', $es_disposable_list).')$/i', trim($_POST['esfpx_es_txt_email']))){ 
+				$es_response['error'] = 'unexpected-error';
+				$echoAble=json_encode($es_response);
+				return $es_response;
+			}
 
-			if ( ( isset( $_REQUEST['es'] ) ) && ( 'subscribe' === $_REQUEST['es'] ) && ( isset( $_REQUEST['action'] ) ) && ( 'es_add_subscriber' === $_REQUEST['action'] ) && !empty( $_REQUEST['esfpx_es-subscribe'] ) ) {
+			if ( ( isset( $_POST['es'] ) ) && ( 'subscribe' === $_POST['es'] ) && !empty( $_POST['esfpx_es-subscribe'] ) ) {
 
-				foreach ($_REQUEST as $key => $value) {
+				foreach ($_POST as $key => $value) {
 					$new_key = str_replace('_pg', '', $key);
-					$_REQUEST[$new_key] = $value;
+					$_POST[$new_key] = $value;
 				}
 
-				$es_subscriber_name  = isset( $_REQUEST['esfpx_es_txt_name'] ) ? trim($_REQUEST['esfpx_es_txt_name']) : '';
-				$es_subscriber_email = isset( $_REQUEST['esfpx_es_txt_email'] ) ? trim($_REQUEST['esfpx_es_txt_email']) : '';
-				$es_subscriber_group = isset( $_REQUEST['esfpx_es_txt_group'] ) ? trim($_REQUEST['esfpx_es_txt_group']) : '';
-				$es_nonce 			 = $_REQUEST['esfpx_es-subscribe'];
+				$es_subscriber_name  = isset( $_POST['esfpx_es_txt_name'] ) ? trim($_POST['esfpx_es_txt_name']) : '';
+				$es_subscriber_email = isset( $_POST['esfpx_es_txt_email'] ) ? trim($_POST['esfpx_es_txt_email']) : '';
+				$es_subscriber_group = isset( $_POST['esfpx_es_txt_group'] ) ? trim($_POST['esfpx_es_txt_group']) : '';
+				$es_nonce 			 = $_POST['esfpx_es-subscribe'];
 
 				$subscriber_form = array(
 										'es_email_name' => '',
@@ -67,7 +87,7 @@ class es_cls_job_subscribe {
 						} else {
 							$subscriber_form['es_email_status'] = "Single Opt In";
 						}
-
+						//validate lead
 						$action = es_cls_dbquery::es_view_subscriber_widget($subscriber_form);
 						if( $action == "sus" ) {
 							$subscribers = es_cls_dbquery::es_view_subscriber_one($es_subscriber_email,$es_subscriber_group);
@@ -91,15 +111,11 @@ class es_cls_job_subscribe {
 					$es_response['error'] = 'no-email-address';
 				}
 			} else {
-				$es_response['error'] = 'unexpected-error';
-			}
-		}else{
-			$es_response['error'] = 'unexpected-error';
+				$es_response['error'] = 'unexpected-error-1';
+			}    
+			
+			return $es_response;
 		}
-
-		echo json_encode($es_response);
-		die();
 	}
+	$es_cls_job_subscribe_obj = es_cls_job_subscribe::getInstance(true);
 }
-
-new es_cls_job_subscribe();

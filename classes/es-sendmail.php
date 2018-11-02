@@ -86,13 +86,14 @@ class es_cls_sendmail {
 		$type = $cronmailqueue[0]['es_sent_source'];
 		$content = $cronmailqueue[0]['es_sent_preview'];
 		$subject = $cronmailqueue[0]['es_sent_subject'];
-		$cacheid = es_cls_common::es_generate_guid(100);
+
 		$replacefrom = array("<ul><br />", "</ul><br />", "<li><br />", "</li><br />", "<ol><br />", "</ol><br />", "</h2><br />", "</h1><br />");
 		$replaceto = array("<ul>", "</ul>", "<li>" ,"</li>", "<ol>", "</ol>", "</h2>", "</h1>");
 		$count = 1;
 
 		$settings = es_cls_settings::es_get_all_settings();
 		$unsublink = es_cls_registerhook::es_add_home_url($settings['ig_es_unsublink'], "?es=unsubscribe&db={{DBID}}&email={{EMAIL}}&guid={{GUID}}" );
+		$cacheid = es_cls_common::es_generate_guid(100);
 		if( trim($settings['ig_es_fromname']) == "" || trim($settings['ig_es_fromemail']) == '' ) {
 			$current_user = ( function_exists('wp_get_current_user') ) ? wp_get_current_user() : get_currentuserinfo();
 			$sender_name = $current_user->user_login;
@@ -131,13 +132,14 @@ class es_cls_sendmail {
 			$es_deliver_id = $crondelivery['es_deliver_id'];
 			$subscriber = es_cls_dbquery::es_view_subscriber_search("", $es_email_id);
 			if(count($subscriber) > 0) {
-				$unsublink = str_replace("{{DBID}}", $subscriber[0]["es_email_id"], $unsublink);
-				$unsublink = str_replace("{{EMAIL}}", $subscriber[0]["es_email_mail"], $unsublink);
-				$unsublink = str_replace("{{GUID}}", $subscriber[0]["es_email_guid"], $unsublink);
-				$unsublink  = $unsublink . "&cache=".$cacheid;
+
+				$email = $subscriber[0]["es_email_mail"];
+				$dbid = $subscriber[0]["es_email_id"];
+				$guid = $subscriber[0]["es_email_guid"];
+				$unsubscribe_link = self::es_prepare_unsubscribe_link($unsublink, $email, $dbid, $guid, $cacheid);
 
 				$unsubtext = stripslashes($settings['ig_es_unsubcontent']);
-				$unsubtext = str_replace("{{LINK}}", $unsublink , $unsubtext);
+				$unsubtext = str_replace("{{LINK}}", $unsubscribe_link , $unsubtext);
 
 				if ( $settings['ig_es_emailtype'] == "WP HTML MAIL" || $settings['ig_es_emailtype'] == "PHP HTML MAIL" ) {
 					$unsubtext = '<br>' . $unsubtext;
@@ -203,7 +205,6 @@ class es_cls_sendmail {
 		$data = array();
 		$wp_mail = false;
 		$php_mail = false;
-		$unsublink = "";
 		$unsubtext = "";
 		$sendguid = "";
 		$viewstatus = "";
@@ -213,12 +214,11 @@ class es_cls_sendmail {
 		$adminmailcontant = "";
 		$reportmail = "";
 		$currentdate = date('Y-m-d G:i:s');
-		$cacheid = es_cls_common::es_generate_guid(100);
 		$replacefrom = array("<ul><br />", "</ul><br />", "<li><br />", "</li><br />", "<ol><br />", "</ol><br />", "</h2><br />", "</h1><br />");
 		$replaceto = array("<ul>", "</ul>", "<li>" ,"</li>", "<ol>", "</ol>", "</h2>", "</h1>");
-
 		$settings = es_cls_settings::es_get_all_settings();
 		$unsublink = es_cls_registerhook::es_add_home_url($settings['ig_es_unsublink'], "?es=unsubscribe&db={{DBID}}&email={{EMAIL}}&guid={{GUID}}" );
+		$cacheid = es_cls_common::es_generate_guid(100);
 
 		$adminmail = $settings['ig_es_adminemail'];
 		$es_c_adminmailoption = $settings['ig_es_notifyadmin'];
@@ -372,6 +372,15 @@ class es_cls_sendmail {
 			foreach ($subscribers as $subscriber) {
 				$to = $subscriber['es_email_mail'];
 				$name = $subscriber['es_email_name'];
+
+
+				//Get Unsubscribe link
+				$dbid = (!empty($subscriber["es_email_id"])) ? $subscriber["es_email_id"] : '';
+				$guid = (!empty($subscriber["es_email_guid"])) ? $subscriber["es_email_guid"] : '';
+
+				$unsubscribe_link = self::es_prepare_unsubscribe_link($unsublink, $to, $dbid, $guid, $cacheid);
+
+
 				if( $name == "" ) {
 					$name = $to;
 				}
@@ -396,11 +405,7 @@ class es_cls_sendmail {
 						$content_send = str_replace("{{GROUP}}", $group, $content_send);
 
 						// Making an unsubscribe link
-						$unsublink = str_replace("{{DBID}}", $subscriber["es_email_id"], $unsublink);
-						$unsublink = str_replace("{{EMAIL}}", $subscriber["es_email_mail"], $unsublink);
-						$unsublink = str_replace("{{GUID}}", $subscriber["es_email_guid"], $unsublink);
-						$unsublink  = $unsublink . "&cache=".$cacheid;
-						$content_send = str_replace("{{LINK}}", $unsublink, $content_send);
+						$content_send = str_replace("{{LINK}}", $unsubscribe_link, $content_send);
 
 						$adminmailsubject = stripslashes($settings['ig_es_admin_new_sub_subject']);
 						$adminmailcontant = stripslashes($settings['ig_es_admin_new_sub_content']);
@@ -419,13 +424,8 @@ class es_cls_sendmail {
 
 					case 'newsletter':
 						if( $mailsenttype != "Cron" ) { 					// Cron mail not sending by this method
-							$unsublink = str_replace("{{DBID}}", $subscriber["es_email_id"], $unsublink);
-							$unsublink = str_replace("{{EMAIL}}", $subscriber["es_email_mail"], $unsublink);
-							$unsublink = str_replace("{{GUID}}", $subscriber["es_email_guid"], $unsublink);
-							$unsublink  = $unsublink . "&cache=".$cacheid;
-
 							$unsubtext = stripslashes($settings['ig_es_unsubcontent']);
-							$unsubtext = str_replace("{{LINK}}", $unsublink , $unsubtext);
+							$unsubtext = str_replace("{{LINK}}", $unsubscribe_link , $unsubtext);
 							if ( $settings['ig_es_emailtype'] == "WP HTML MAIL" || $settings['ig_es_emailtype'] == "PHP HTML MAIL" ) {
 								$unsubtext = '<br>' . $unsubtext;
 							} else {
@@ -452,14 +452,8 @@ class es_cls_sendmail {
 
 					case 'notification':  // notification mail to subscribers
 						if( $mailsenttype != "Cron" ) { 					// Cron mail not sending by this method
-
-							$unsublink = str_replace("{{DBID}}", $subscriber["es_email_id"], $unsublink);
-							$unsublink = str_replace("{{EMAIL}}", $subscriber["es_email_mail"], $unsublink);
-							$unsublink = str_replace("{{GUID}}", $subscriber["es_email_guid"], $unsublink);
-							$unsublink  = $unsublink . "&cache=".$cacheid;
-
 							$unsubtext = stripslashes($settings['ig_es_unsubcontent']);
-							$unsubtext = str_replace("{{LINK}}", $unsublink , $unsubtext);
+							$unsubtext = str_replace("{{LINK}}", $unsubscribe_link, $unsubtext);
 							if ( $settings['ig_es_emailtype'] == "WP HTML MAIL" || $settings['ig_es_emailtype'] == "PHP HTML MAIL" ) {
 								$unsubtext = '<br>' . $unsubtext;
 							} else {
@@ -567,5 +561,16 @@ class es_cls_sendmail {
 				}
 			}
 		}
+	}
+
+	public static function es_prepare_unsubscribe_link($unsublink, $email, $dbid, $guid, $cacheid) {
+
+		$unsublink = str_replace("{{DBID}}", $dbid, $unsublink);
+		$unsublink = str_replace("{{EMAIL}}", $email, $unsublink);
+		$unsublink = str_replace("{{GUID}}", $guid, $unsublink);
+		$unsublink  = $unsublink . "&cache=".$cacheid;
+
+		return $unsublink;
+
 	}
 }

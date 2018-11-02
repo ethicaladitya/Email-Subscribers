@@ -1,0 +1,36 @@
+.es-deactivate-survey-modal {
+  display: none;
+  table-layout: fixed;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 14px;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+}
+.es-deactivate-survey-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.es-deactivate-survey {
+  background-color: #f1f1f1;
+  border: 0 solid #ccc;
+  border-radius: 3px;
+  margin: 0 auto;
+  padding: 12px;
+  width: 628px;
+  direction: ltr;
+}
+
+.es-deactivate-survey a.button {
+  white-space: normal;
+  height: auto;
+}
+
+#es-deactivate-survey-close{
+	margin-top: 10px;
+}

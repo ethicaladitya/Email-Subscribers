@@ -64,10 +64,10 @@ if ( !empty($_SERVER) && !empty($_GET) && !empty($_GET['es']) && $_GET['es'] == 
 			es_cls_common::download( $wp_comment_posted_users, 'c', '' );
 			break;
 		default:
-			echo __( 'Unexpected url submit has been detected!', ES_TDOMAIN );
+			echo __( 'Unexpected url submit has been detected!', 'email-subscribers' );
 			break;
 	}
 } else {
-	echo __( 'Unexpected url submit has been detected!', ES_TDOMAIN );
+	echo __( 'Unexpected url submit has been detected!', 'email-subscribers' );
 }
 die();

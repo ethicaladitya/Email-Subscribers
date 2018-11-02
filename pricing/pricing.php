@@ -174,38 +174,38 @@ ul.checkmark li:after {
 </style>
 
 <div class="wrap about-wrap es">
-	<div class="es_main_heading"><?php _e('Go a notch higher', ES_TDOMAIN); ?></div>
-	<div class="es_pro_heading"><?php _e('Get the Email Subscribers Pro / Max Plugin at', ES_TDOMAIN); ?></div>
+	<div class="es_main_heading"><?php _e('Go a notch higher', 'email-subscribers'); ?></div>
+	<div class="es_pro_heading"><?php _e('Get the Email Subscribers Pro / Max Plugin at', 'email-subscribers'); ?></div>
 	<div class="row">
 		<div class="es_featured_column_container">
 			<div class="column column_one_third es_monthly">
                 <div class="es_plan"><h4>Pro - Monthly</h4> (Single Site)</div>
-				<div class="es_monthly_price"><b>$19.99/</b><?php _e('month', ES_TDOMAIN); ?></div>
-				<a href="https://www.icegram.com/?buy-now=39043&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5&utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_monthly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Pro Monthly', ES_TDOMAIN); ?></a>
+				<div class="es_monthly_price"><b>$19.99/</b><?php _e('month', 'email-subscribers'); ?></div>
+				<a href="https://www.icegram.com/?buy-now=39043&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5&utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_monthly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Pro Monthly', 'email-subscribers'); ?></a>
 			</div>
 			<div class="column column_one_third">
                 <div class="es_plan"><h4>Pro - Annual</h4> (Single Site)</div>
-                <div class="es_yearly_price"><strike>$199</strike></b> <b>$129/</b><?php _e('year', ES_TDOMAIN); ?></div>
-				<a href="https://www.icegram.com/?buy-now=39944&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_yearly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Pro Annual', ES_TDOMAIN); ?></a>
+                <div class="es_yearly_price"><strike>$199</strike></b> <b>$129/</b><?php _e('year', 'email-subscribers'); ?></div>
+				<a href="https://www.icegram.com/?buy-now=39944&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_yearly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Pro Annual', 'email-subscribers'); ?></a>
 			</div>
             <div class="column column_one_third last es_save_price es_max">
                 <div class="es_plan"><h4>Max - Multi Site, Annual</h4> (3 Sites)</div>
-				<div class="es_yearly_price"><strike>$597</strike></b> <b>$177/</b><?php _e('year', ES_TDOMAIN); ?></div>
-				<a href="https://www.icegram.com/?buy-now=404335&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_yearly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Max Annual', ES_TDOMAIN); ?></a>
+				<div class="es_yearly_price"><strike>$597</strike></b> <b>$177/</b><?php _e('year', 'email-subscribers'); ?></div>
+				<a href="https://www.icegram.com/?buy-now=404335&amp;qty=1&amp;coupon=&amp;with-cart=1&amp;page=5utm_source=es&utm_medium=in_app_pricing&utm_campaign=es_yearly" target="_blank" rel="noopener" class="es_button"><?php _e('Get Max Annual', 'email-subscribers'); ?></a>
 			</div>
 		</div>
 	</div>
-	<div class="es_pro_feature"><?php _e('Get more with Email Subscribers Pro / Max', ES_TDOMAIN); ?></div>
+	<div class="es_pro_feature"><?php _e('Get more with Email Subscribers Pro / Max', 'email-subscribers'); ?></div>
 	<div class="row">
-		<div class="pricing__headline"><?php _e('All features of Email Subscribers free plugin + everything below:', ES_TDOMAIN); ?></div>
+		<div class="pricing__headline"><?php _e('All features of Email Subscribers free plugin + everything below:', 'email-subscribers'); ?></div>
         <div class="es_featured_column_container">
             <div class="column column_one_half">
-                <h4><strong><?php _e('Protect your list from bot attacks', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Use ', ES_TDOMAIN); ?><strong><?php _e('captcha', ES_TDOMAIN); ?></strong> <?php _e('to protect your email list from bots. The simple maths captcha helps identifying bots from humans and eliminates spam signups.', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Protect your list from bot attacks', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Use ', 'email-subscribers'); ?><strong><?php _e('captcha', 'email-subscribers'); ?></strong> <?php _e('to protect your email list from bots. The simple maths captcha helps identifying bots from humans and eliminates spam signups.', 'email-subscribers'); ?></p>
             </div>
             <div class="column column_one_half last">
-                <h4><strong><?php _e('Check email status & increase email success rate', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Double check the status of the emails addresses and increase ', ES_TDOMAIN); ?><strong><?php _e('email success rate', ES_TDOMAIN); ?></strong> <?php _e('of your email campaign. ', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Check email status & increase email success rate', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Double check the status of the emails addresses and increase ', 'email-subscribers'); ?><strong><?php _e('email success rate', 'email-subscribers'); ?></strong> <?php _e('of your email campaign. ', 'email-subscribers'); ?></p>
             </div>
         </div>
     </div>
@@ -213,24 +213,24 @@ ul.checkmark li:after {
     <div class="row">
         <div class="es_featured_column_container">
             <div class="column column_one_half">
-                <h4><strong><?php _e('Fullproof email deliverability', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Reduce the risk of emails ending in trash or spam. Increase email deliverability by double checking emails for their ', ES_TDOMAIN); ?><strong><?php _e('spam score', ES_TDOMAIN); ?></strong> <?php _e('before hitting send.', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Fullproof email deliverability', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Reduce the risk of emails ending in trash or spam. Increase email deliverability by double checking emails for their ', 'email-subscribers'); ?><strong><?php _e('spam score', 'email-subscribers'); ?></strong> <?php _e('before hitting send.', 'email-subscribers'); ?></p>
             </div>
             <div class="column column_one_half last">
-                <h4><strong><?php _e('Track email leads in Google', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Insert ', ES_TDOMAIN); ?><strong><?php _e('UTM tracking', ES_TDOMAIN); ?></strong> <?php _e('in all your email CTA’s and track the effectiveness of your emails directly within Google. Know which/ how many leads landed up from your emails and tweak emails for better performance.', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Track email leads in Google', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Insert ', 'email-subscribers'); ?><strong><?php _e('UTM tracking', 'email-subscribers'); ?></strong> <?php _e('in all your email CTA’s and track the effectiveness of your emails directly within Google. Know which/ how many leads landed up from your emails and tweak emails for better performance.', 'email-subscribers'); ?></p>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="es_featured_column_container">
             <div class="column column_one_half">
-                <h4><strong><?php _e('Save time, use readymade email templates', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Don’t waste time on HTML or CSS. Pick one from the many <strong>ready to use elegant templates</strong> to send your next email campaign.', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Save time, use readymade email templates', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Don’t waste time on HTML or CSS. Pick one from the many <strong>ready to use elegant templates</strong> to send your next email campaign.', 'email-subscribers'); ?></p>
             </div>
             <div class="column column_one_half last">
-                <h4><strong><?php _e('Customize confirmation and unsubscribe page', ES_TDOMAIN); ?></strong></h4>
-                <p style="text-align: left;"><?php _e('Communicate with subscribers. Redirect them to beautifully designed <strong>confirmation and unsubscribe pages</strong> on your website.', ES_TDOMAIN); ?></p>
+                <h4><strong><?php _e('Customize confirmation and unsubscribe page', 'email-subscribers'); ?></strong></h4>
+                <p style="text-align: left;"><?php _e('Communicate with subscribers. Redirect them to beautifully designed <strong>confirmation and unsubscribe pages</strong> on your website.', 'email-subscribers'); ?></p>
             </div>
         </div>
     </div>

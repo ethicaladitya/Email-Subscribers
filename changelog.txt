@@ -4,6 +4,24 @@ Author		: Icegram
 Author URI	: https://www.icegram.com/
 License		: GPLv3
 
+***********************************************************Version 3.5.15***********************************************************
+
+* Fix: Extra field shown for forms on RTL sites
+
+***********************************************************Version 3.5.14***********************************************************
+
+* Fix: Improve prevention of spam signups
+
+***********************************************************Version 3.5.13***********************************************************
+
+* Fix: “Oops, an unexpected error occurred” while subscribing 
+* Update: Added shortcode support in email templates [learn more](https://www.icegram.com/documentation/why-some-shortcodes-are-not-working-in-email-templates)
+
+***********************************************************Version 3.5.12***********************************************************
+
+* Fix: Invalid unsubscribe link
+* Update: Use string instead of constant for Text Domain.
+
 ***********************************************************Version 3.5.11***********************************************************
 
 * Fix: Send test newsletter to "Test" group on update

@@ -28,15 +28,12 @@
 	add_action( 'wp_enqueue_scripts', array( 'es_cls_registerhook', 'es_load_widget_scripts_styles' ) );
 	add_action( 'widgets_init', array( 'es_cls_registerhook', 'es_widget_loading' ) );
 
-	//Deactivation Survey
-	register_deactivation_hook( __FILE__, 'setupDeactivationSurvey' );
-
 	// Action to Upgrade Email Subscribers database
 	add_action( 'init', array( 'es_cls_registerhook', 'sa_email_subscribers_db_update' ), 11 );
 
 	// Admin Notices
-	add_action( 'admin_notices', array( 'es_cls_registerhook', 'es_add_admin_notices' ) );
-	add_action( 'admin_init', array( 'es_cls_registerhook', 'dismiss_admin_notice' ) );
+	// add_action( 'admin_notices', array( 'es_cls_registerhook', 'es_add_admin_notices' ) );
+	// add_action( 'admin_init', array( 'es_cls_registerhook', 'dismiss_admin_notice' ) );
 
 	add_shortcode( 'email-subscribers', 'es_shortcode' );
 
@@ -46,6 +43,7 @@
 	require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'es-directly.php');
 
 	add_action( 'plugins_loaded', 'es_textdomain' );
+	
 	function es_textdomain() {
 		load_plugin_textdomain( 'email-subscribers' , false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
@@ -132,14 +130,9 @@
 		}
 	}
 	
-function setupRenderer() {
-    $caching = !WP_DEBUG;
-    $debugging = WP_DEBUG;
-    $this->renderer = new Renderer($caching, $debugging);
-  }
-
+add_action( 'plugins_loaded', 'setupDeactivationSurvey' );
 function setupDeactivationSurvey() {
-    $survey = new DeactivationSurvey($this->renderer);
+    $survey = new deactivationSurvey($this);
     $survey->init();
   }
 	register_activation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_activation' ) );

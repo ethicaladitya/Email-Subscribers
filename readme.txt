@@ -5,7 +5,7 @@ Author URI: https://www.icegram.com/
 Tags: subscription, newsletter, email marketing, post notification, email newsletter form, email signup, email widget, newsletter signup, subscribe, subscription form, bulk emails, signup form, list builder, lead generation
 Requires at least: 3.9
 Tested up to: 4.9.8
-Stable tag: 3.5.11
+Stable tag: 3.5.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses
 
@@ -341,6 +341,23 @@ Use our free plugin [Email Subscribers - Group Selector](https://wordpress.org/p
 11. Admin page - Delivery Report of emails i.e. email sent, opened, viewed status, viewed date
 
 == Changelog ==
+
+= 3.5.15 (25.10.2018) =
+* Fix: Extra field shown for forms on RTL sites
+
+= 3.5.14 (15.10.2018) =
+
+* Fix: Improve prevention of spam signups
+
+= 3.5.13 (05.10.2018) =
+
+* Fix: “Oops, an unexpected error occurred” while subscribing 
+* Update: Added shortcode support in email templates [learn more](https://www.icegram.com/documentation/why-some-shortcodes-are-not-working-in-email-templates)
+
+= 3.5.12 (28.09.2018) =
+
+* Fix: Invalid unsubscribe link
+* Update: Use string instead of constant for Text Domain.
 
 = 3.5.11 (24.09.2018) =
 

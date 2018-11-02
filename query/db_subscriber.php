@@ -98,10 +98,9 @@ class es_cls_dbquery {
 	public static function es_view_subscriber_ins($data = array(), $action = "insert") {
 
 		global $wpdb;
-
 		// Security
 		if ( array_key_exists( 'es_nonce', $data ) ) {
-			if ( empty ( $data['es_nonce'] ) || ! wp_verify_nonce( $data['es_nonce'], 'es-subscribe' ) ) {
+			if ( empty ( $data['es_nonce'] ) || ! wp_verify_nonce( $data['es_nonce'], 'es-subscribe') ) {
 				return "invalid";
 			}
 		} elseif ( array_key_exists( 'es_af_nonce', $data ) ) {
