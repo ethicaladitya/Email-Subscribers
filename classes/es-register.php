@@ -10,8 +10,6 @@ class es_cls_registerhook {
 		global $wpdb;
 
 		add_option( 'email-subscribers', "2.9" );
-		add_action( 'admin_notices', array( &$this,'ig_add_admin_notices_star'));
-		add_action( 'admin_init', array( &$this, 'dismiss_admin_notice_star' ) );
 
 		// Creating default tables
 		global $wpdb;
@@ -80,13 +78,13 @@ class es_cls_registerhook {
 		}
 
 		if ( $es_missing_tables ) {
-			$errors[]      = __( 'These tables could not be created on installation ' . implode( ', ', $es_missing_tables ), ES_TDOMAIN );
+			$errors[]      = __( 'These tables could not be created on installation ' . implode( ', ', $es_missing_tables ), 'email-subscribers' );
 			$es_has_errors = true;
 		}
 
 		// if error call wp_die()
 		if ( $es_has_errors ) {
-			wp_die( __( $errors[0], ES_TDOMAIN ) );
+			wp_die( __( $errors[0], 'email-subscribers' ) );
 
 			return false;
 		} else {
@@ -185,36 +183,36 @@ class es_cls_registerhook {
 			$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 		}
 
-		add_menu_page( __( 'Email Subscribers', ES_TDOMAIN ),
-			__( 'Email Subscribers', ES_TDOMAIN ), 'edit_posts', 'es-view-subscribers', array( 'es_cls_intermediate', 'es_subscribers' ), 'dashicons-email', 51 );
+		add_menu_page( __( 'Email Subscribers', 'email-subscribers' ),
+			__( 'Email Subscribers', 'email-subscribers' ), 'edit_posts', 'es-view-subscribers', array( 'es_cls_intermediate', 'es_subscribers' ), 'dashicons-email', 51 );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Subscribers', ES_TDOMAIN ),
-			__( 'Subscribers', ES_TDOMAIN ), $es_roles_subscriber, 'es-view-subscribers', array( 'es_cls_intermediate', 'es_subscribers' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Subscribers', 'email-subscribers' ),
+			__( 'Subscribers', 'email-subscribers' ), $es_roles_subscriber, 'es-view-subscribers', array( 'es_cls_intermediate', 'es_subscribers' ) );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Templates', ES_TDOMAIN ),
-			__( 'Templates', ES_TDOMAIN ), $es_roles_mail, 'edit.php?post_type=es_template', null );
+		add_submenu_page( 'es-view-subscribers', __( 'Templates', 'email-subscribers' ),
+			__( 'Templates', 'email-subscribers' ), $es_roles_mail, 'edit.php?post_type=es_template', null );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Post Notifications', ES_TDOMAIN ),
-			__( 'Post Notifications', ES_TDOMAIN ), $es_roles_notification, 'es-notification', array( 'es_cls_intermediate', 'es_notification' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Post Notifications', 'email-subscribers' ),
+			__( 'Post Notifications', 'email-subscribers' ), $es_roles_notification, 'es-notification', array( 'es_cls_intermediate', 'es_notification' ) );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Newsletters', ES_TDOMAIN ),
-			__( 'Newsletters', ES_TDOMAIN ), $es_roles_sendmail, 'es-sendemail', array( 'es_cls_intermediate', 'es_sendemail' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Newsletters', 'email-subscribers' ),
+			__( 'Newsletters', 'email-subscribers' ), $es_roles_sendmail, 'es-sendemail', array( 'es_cls_intermediate', 'es_sendemail' ) );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Settings', ES_TDOMAIN ),
-			__( 'Settings', ES_TDOMAIN ), 'manage_options', 'es-settings', array( 'es_cls_intermediate', 'es_settings' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Settings', 'email-subscribers' ),
+			__( 'Settings', 'email-subscribers' ), 'manage_options', 'es-settings', array( 'es_cls_intermediate', 'es_settings' ) );
 
-        add_submenu_page( 'es-view-subscribers', __( 'Tools', ES_TDOMAIN ),
-			__( 'Tools', ES_TDOMAIN ), 'manage_options', 'es-tools', array( 'es_cls_intermediate', 'es_tools' ) );
+        add_submenu_page( 'es-view-subscribers', __( 'Tools', 'email-subscribers' ),
+			__( 'Tools', 'email-subscribers' ), 'manage_options', 'es-tools', array( 'es_cls_intermediate', 'es_tools' ) );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Reports', ES_TDOMAIN ),
-			__( 'Reports', ES_TDOMAIN ), $es_roles_sentmail, 'es-sentmail', array( 'es_cls_intermediate', 'es_sentmail' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Reports', 'email-subscribers' ),
+			__( 'Reports', 'email-subscribers' ), $es_roles_sentmail, 'es-sentmail', array( 'es_cls_intermediate', 'es_sentmail' ) );
 
-		add_submenu_page( 'es-view-subscribers', __( 'Help & Info', ES_TDOMAIN ),
-			__( '<span style="color:#f18500;font-weight:bolder;">Help & Info</span>', ES_TDOMAIN ), 'edit_posts', 'es-general-information', array( 'es_cls_intermediate', 'es_information' ) );
+		add_submenu_page( 'es-view-subscribers', __( 'Help & Info', 'email-subscribers' ),
+			__( '<span style="color:#f18500;font-weight:bolder;">Help & Info</span>', 'email-subscribers' ), 'edit_posts', 'es-general-information', array( 'es_cls_intermediate', 'es_information' ) );
 
 		if ( ! ( in_array( 'email-subscribers-premium/email-subscribers-premium.php', $active_plugins ) || array_key_exists( 'email-subscribers-premium/email-subscribers-premium.php', $active_plugins ) ) ) {
-			add_submenu_page( 'es-view-subscribers', __( 'Go Pro', ES_TDOMAIN ),
-				__( '<span style="color:#03a025;font-weight:bolder;">Go Pro</span>', ES_TDOMAIN ), 'edit_posts', 'es-pricing', array( 'es_cls_intermediate', 'es_pricing' ) );
+			add_submenu_page( 'es-view-subscribers', __( 'Go Pro', 'email-subscribers' ),
+				__( '<span style="color:#03a025;font-weight:bolder;">Go Pro</span>', 'email-subscribers' ), 'edit_posts', 'es-pricing', array( 'es_cls_intermediate', 'es_pricing' ) );
 		}
 	}
 
@@ -233,7 +231,7 @@ class es_cls_registerhook {
 	    	}
 			if ( in_array( $screen->id, array( 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail' ), true ) ) {
 				?>
-				<span class="es_upsale" ><?php _e( 'Save time using beautiful readymade templates <a href="https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Checkout here</a>', ES_TDOMAIN ) ?></span>
+				<span class="es_upsale" ><?php _e( 'Save time using beautiful readymade templates <a href="https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Checkout here</a>', 'email-subscribers' ) ?></span>
 				<?php
 			}
 
@@ -245,7 +243,7 @@ class es_cls_registerhook {
 	public static function add_captcha_link(){
 		?>
 			<tr class="es-admin active-settings">
-			<td  class="es_upsale"><?php _e('Enable captcha to protect list from bot attacks <a href="https://www.icegram.com/documentation/es-how-to-add-captcha-in-subscribe-form-of-email-subscribers/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>', ES_TDOMAIN )?></td>
+			<td  class="es_upsale"><?php _e('Enable captcha to protect list from bot attacks <a href="https://www.icegram.com/documentation/es-how-to-add-captcha-in-subscribe-form-of-email-subscribers/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>', 'email-subscribers' )?></td>
 			</tr>
 		<?php
 	}
@@ -305,18 +303,18 @@ class es_cls_registerhook {
 					wp_register_script( 'es-view-subscribers', ES_URL . 'subscribers/view-subscriber.js', '', '', true );
 					wp_enqueue_script( 'es-view-subscribers' );
 					$es_select_params = array(
-						'es_subscriber_email'          => _x( 'Please enter subscriber email address.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_email_status'   => _x( 'Please select subscriber email status.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_group'          => _x( 'Please select or create group for this subscriber.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_delete_record'  => _x( 'Do you want to delete this record?', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_bulk_action'    => _x( 'Please select the bulk action.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_confirm_delete' => _x( 'Are you sure you want to delete selected records?', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_resend_email'   => _x( 'Do you want to resend confirmation email? Also please note, this will update subscriber current status to \'Unconfirmed\'.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_new_group'      => _x( 'Please select new subscriber group.', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_new_status'     => _x( 'Please select new status for subscribers', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_group_update'   => _x( 'Do you want to update subscribers group?', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_status_update'  => _x( 'Do you want to update subscribers status?', 'view-subscriber-enhanced-select', ES_TDOMAIN ),
-						'es_subscriber_csv_file'       => _x( 'Please select only csv file. Please check official website for csv structure..', 'view-subscriber-enhanced-select', ES_TDOMAIN )
+						'es_subscriber_email'          => _x( 'Please enter subscriber email address.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_email_status'   => _x( 'Please select subscriber email status.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_group'          => _x( 'Please select or create group for this subscriber.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_delete_record'  => _x( 'Do you want to delete this record?', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_bulk_action'    => _x( 'Please select the bulk action.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_confirm_delete' => _x( 'Are you sure you want to delete selected records?', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_resend_email'   => _x( 'Do you want to resend confirmation email? Also please note, this will update subscriber current status to \'Unconfirmed\'.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_new_group'      => _x( 'Please select new subscriber group.', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_new_status'     => _x( 'Please select new status for subscribers', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_group_update'   => _x( 'Do you want to update subscribers group?', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_status_update'  => _x( 'Do you want to update subscribers status?', 'view-subscriber-enhanced-select', 'email-subscribers' ),
+						'es_subscriber_csv_file'       => _x( 'Please select only csv file. Please check official website for csv structure..', 'view-subscriber-enhanced-select', 'email-subscribers' )
 					);
 					wp_localize_script( 'es-view-subscribers', 'es_view_subscriber_notices', $es_select_params );
 					break;
@@ -324,10 +322,10 @@ class es_cls_registerhook {
 					wp_register_script( 'es-notification', ES_URL . 'notification/notification.js', '', '', true );
 					wp_enqueue_script( 'es-notification' );
 					$es_select_params = array(
-						'es_notification_select_group'  => _x( 'Please select subscribers group.', 'notification-enhanced-select', ES_TDOMAIN ),
-						'es_notification_mail_subject'  => _x( 'Please select notification mail subject. Use templates menu to create new.', 'notification-enhanced-select', ES_TDOMAIN ),
-						'es_notification_status'        => _x( 'Please select notification status.', 'notification-enhanced-select', ES_TDOMAIN ),
-						'es_notification_delete_record' => _x( 'Do you want to delete this record?', 'notification-enhanced-select', ES_TDOMAIN )
+						'es_notification_select_group'  => _x( 'Please select subscribers group.', 'notification-enhanced-select', 'email-subscribers' ),
+						'es_notification_mail_subject'  => _x( 'Please select notification mail subject. Use templates menu to create new.', 'notification-enhanced-select', 'email-subscribers' ),
+						'es_notification_status'        => _x( 'Please select notification status.', 'notification-enhanced-select', 'email-subscribers' ),
+						'es_notification_delete_record' => _x( 'Do you want to delete this record?', 'notification-enhanced-select', 'email-subscribers' )
 					);
 					wp_localize_script( 'es-notification', 'es_notification_notices', $es_select_params );
 					break;
@@ -335,9 +333,9 @@ class es_cls_registerhook {
 					wp_register_script( 'sendmail', ES_URL . 'sendmail/sendmail.js', '', '', true );
 					wp_enqueue_script( 'sendmail' );
 					$es_select_params = array(
-						'es_sendmail_subject' => _x( 'Please select your mail subject.', 'sendmail-enhanced-select', ES_TDOMAIN ),
-						'es_sendmail_status'  => _x( 'Please select your mail type.', 'sendmail-enhanced-select', ES_TDOMAIN ),
-						'es_sendmail_confirm' => _x( 'Have you double checked your selected group? If so, let\'s go ahead and send this.', 'sendmail-enhanced-select', ES_TDOMAIN )
+						'es_sendmail_subject' => _x( 'Please select your mail subject.', 'sendmail-enhanced-select', 'email-subscribers' ),
+						'es_sendmail_status'  => _x( 'Please select your mail type.', 'sendmail-enhanced-select', 'email-subscribers' ),
+						'es_sendmail_confirm' => _x( 'Have you double checked your selected group? If so, let\'s go ahead and send this.', 'sendmail-enhanced-select', 'email-subscribers' )
 					);
 					wp_localize_script( 'sendmail', 'es_sendmail_notices', $es_select_params );
 					break;
@@ -345,8 +343,8 @@ class es_cls_registerhook {
 					wp_register_script( 'es-sentmail', ES_URL . 'sentmail/sentmail.js', '', '', true );
 					wp_enqueue_script( 'es-sentmail' );
 					$es_select_params = array(
-						'es_sentmail_delete'     => _x( 'Do you want to delete this record?', 'sentmail-enhanced-select', ES_TDOMAIN ),
-						'es_sentmail_delete_all' => _x( 'Do you want to delete all records except latest 10?', 'sentmail-enhanced-select', ES_TDOMAIN )
+						'es_sentmail_delete'     => _x( 'Do you want to delete this record?', 'sentmail-enhanced-select', 'email-subscribers' ),
+						'es_sentmail_delete_all' => _x( 'Do you want to delete all records except latest 10?', 'sentmail-enhanced-select', 'email-subscribers' )
 					);
 					wp_localize_script( 'es-sentmail', 'es_sentmail_notices', $es_select_params );
 					break;
@@ -354,8 +352,8 @@ class es_cls_registerhook {
 					wp_register_script( 'es-settings', ES_URL . 'settings/es-settings.js', '', '', true );
 					wp_enqueue_script( 'es-settings' );
 					$es_select_params = array(
-						'es_cron_number'     => _x( 'Please select enter number of mails you want to send per hour/trigger.', 'cron-enhanced-select', ES_TDOMAIN ),
-						'es_cron_input_type' => _x( 'Please enter the mail count, only number.', 'cron-enhanced-select', ES_TDOMAIN )
+						'es_cron_number'     => _x( 'Please select enter number of mails you want to send per hour/trigger.', 'cron-enhanced-select', 'email-subscribers' ),
+						'es_cron_input_type' => _x( 'Please enter the mail count, only number.', 'cron-enhanced-select', 'email-subscribers' )
 					);
 					wp_localize_script( 'es-settings', 'es_cron_notices', $es_select_params );
 					break;
@@ -368,13 +366,13 @@ class es_cls_registerhook {
 		wp_register_script( 'es-widget-page', ES_URL . 'widget/es-widget-page.js', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'es-widget-page' );
 		$es_select_params = array(
-			'es_email_notice'    => _x( 'Please enter email address', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_success_message' => _x( 'Successfully Subscribed.', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_success_notice'  => _x( 'Your subscription was successful! Kindly check your mailbox and confirm your subscription. If you don\'t see the email within a few minutes, check the spam/junk folder.', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_email_exists'    => _x( 'Email Address already exists!', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_error'           => _x( 'Oops.. Unexpected error occurred.', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_invalid_email'   => _x( 'Invalid email address', 'widget-page-enhanced-select', ES_TDOMAIN ),
-			'es_try_later'       => _x( 'Please try after some time', 'widget-page-enhanced-select', ES_TDOMAIN ),
+			'es_email_notice'    => _x( 'Please enter email address', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_success_message' => _x( 'Successfully Subscribed.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_success_notice'  => _x( 'Your subscription was successful! Kindly check your mailbox and confirm your subscription. If you don\'t see the email within a few minutes, check the spam/junk folder.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_email_exists'    => _x( 'Email Address already exists!', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_error'           => _x( 'Oops.. Unexpected error occurred.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_invalid_email'   => _x( 'Invalid email address', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_try_later'       => _x( 'Please try after some time', 'widget-page-enhanced-select', 'email-subscribers' ),
 			'es_ajax_url'        => admin_url( 'admin-ajax.php' ),
 		);
 		wp_localize_script( 'es-widget-page', 'es_widget_page_notices', $es_select_params );
@@ -804,81 +802,39 @@ class es_cls_registerhook {
 		$total_email_sent  = es_cls_sentmail::es_sentmail_count( $id = 0 );
 		$es_star_review    = get_option( 'es_star_review_email_subscribers' );
 		$es_rating_text = array();
-		$es_rating_text['star_review'] = __( 'If you like <strong>Email Subscribers</strong>, please consider leaving us a <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', ES_TDOMAIN );
-		$es_rating_text['help_review'] = __( 'If you like <strong>Email Subscribers</strong>, tell us more about your experience and leave us <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', ES_TDOMAIN );
+		$es_rating_text['star_review'] = __( 'If you like <strong>Email Subscribers</strong>, please consider leaving us a <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', 'email-subscribers' );
+		$es_rating_text['help_review'] = __( 'If you like <strong>Email Subscribers</strong>, tell us more about your experience and leave us <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', 'email-subscribers' );
 		
 		if ( ( $total_subscribers >= 10 || $total_email_sent > 2 ) && $es_star_review != 'no' ) {
 			$key = array_rand($es_rating_text);
 			$es_rating_text = $es_rating_text[$key]; 
-			echo '<div class="notice notice-warning" style="background-color: #FFF;"><p style="letter-spacing: 0.6px;">' . $es_rating_text . ' <a style="float:right" class="es-admin-btn es-admin-btn-secondary" href="?dismiss_admin_notice_star=1&option_name=ig_star_review">' . __( 'No, I don\'t like it', ES_TDOMAIN ) . '</a></p></div>';
-		}
-	}
-
-	public static function es_submit_survey() {
-
-		$url = 'https://www.icegram.com/wp-admin/admin-ajax.php';
-
-		if ( ! empty( $_POST ) ) {
-
-			if ( ! empty( $_POST['btn-val'] ) ) {
-
-				if ( 'cancel' === $_POST['btn-val'] ) {
-					update_option( 'ig_es_survey_for_problems_cancelled', true );
-					exit();
-				} elseif ( 'no' === $_POST['btn-val'] ) {
-					unset( $_POST['es_email'] );
-				}
-			}
-
-			$params           = $_POST;
-			$params['domain'] = home_url();
-
-			$method = 'POST';
-			$qs     = http_build_query( $params );
-
-			$options = array(
-				'timeout' => 15,
-				'method'  => $method
-			);
-
-			if ( $method == 'POST' ) {
-				$options['body'] = $qs;
-			} else {
-				if ( strpos( $url, '?' ) !== false ) {
-					$url .= '&' . $qs;
-				} else {
-					$url .= '?' . $qs;
-				}
-			}
-
-			$response = wp_remote_request( $url, $options );
-
-			if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
-				$data = json_decode( $response['body'], true );
-
-				if ( empty( $data['error'] ) ) {
-					if ( ! empty( $data ) && ! empty( $data['success'] ) ) {
-						update_option( 'ig_es_survey_for_problems_done', true );
-					}
-					echo( json_encode( $data ) );
-				}
-			}
+			echo '<div class="notice notice-warning" style="background-color: #FFF;"><p style="letter-spacing: 0.6px;">' . $es_rating_text . ' <a style="float:right" class="es-admin-btn es-admin-btn-secondary" href="?dismiss_admin_notice=1&option_name=es_star_review">' . __( 'No, I don\'t like it', 'email-subscribers' ) . '</a></p></div>';
 		}
 
-		exit();
-
+		//halloween 2018 :start
+            $timezone_format = _x('Y-m-d', 'timezone date format');
+            $ig_current_date = strtotime(date_i18n($timezone_format));
+            $ig_offer_start = strtotime("2018-10-30");
+            $ig_offer_end = strtotime("2018-11-2");
+            if(($ig_current_date >= $ig_offer_start) && ($ig_current_date <= $ig_offer_end)) {
+                include_once('es-offer.php');
+            }
+        //halloween 2018 :end
 	}
 
 	// Function to dismiss any admin notice
-	public static function dismiss_admin_notice_star() {
-
-		if ( isset( $_GET['dismiss_admin_notice_star'] ) && $_GET['dismiss_admin_notice_star'] == '1' && isset( $_GET['option_name'] ) ) {
+	public static function dismiss_admin_notice() {
+		if ( isset( $_GET['dismiss_admin_notice'] ) && $_GET['dismiss_admin_notice'] == '1' && isset( $_GET['option_name'] ) ) {
 			$option_name = sanitize_text_field( $_GET['option_name'] );
-			update_option( $option_name . 'ig_star_review', 'no' );
-
-			$referer = wp_get_referer();
-			wp_safe_redirect( $referer );
-			exit();
+			update_option( $option_name . '_email_subscribers', 'no' );
+			if($option_name === 'es_offer_halloween_done_2018'){
+                header("Location: https://www.icegram.com/latest-valid-coupons-discounts-offers-deals/?utm_source=in_app&utm_medium=es_banner&utm_campaign=halloween_2018");
+                exit();
+            }else{
+				$referer = wp_get_referer();
+				wp_safe_redirect( $referer );
+				exit();
+			}
 
 		}
 
@@ -889,7 +845,7 @@ class es_cls_registerhook {
 		global $post;
 
 		if ( ( isset( $_GET['page'] ) && ( $_GET['page'] == 'es-view-subscribers' || $_GET['page'] == 'es-notification' || $_GET['page'] == 'es-sendemail' || $_GET['page'] == 'es-settings' || $_GET['page'] == 'es-sentmail' || $_GET['page'] == 'es-general-information' || $_GET['page'] == 'es-pricing' ) ) || ( is_object( $post ) && $post->post_type == 'es_template' ) ) {
-			$es_rating_text = __( 'Thank you for using Email Subscribers! A huge thank you from Icegram!', ES_TDOMAIN );
+			$es_rating_text = __( 'Thank you for using Email Subscribers! A huge thank you from Icegram!', 'email-subscribers' );
 		}
 
 		return $es_rating_text;
@@ -903,7 +859,7 @@ class es_cls_registerhook {
 		$es_current_version = $es_plugin_data['Version'];
 
 		if ( ( isset( $_GET['page'] ) && ( $_GET['page'] == 'es-view-subscribers' || $_GET['page'] == 'es-notification' || $_GET['page'] == 'es-sendemail' || $_GET['page'] == 'es-settings' || $_GET['page'] == 'es-sentmail' || $_GET['page'] == 'es-general-information' || $_GET['page'] == 'es-pricing' ) ) || ( is_object( $post ) && $post->post_type == 'es_template' ) ) {
-			$es_text = sprintf( __( 'Email Subscribers version: <strong>%s</strong>', ES_TDOMAIN ), $es_current_version );
+			$es_text = sprintf( __( 'Email Subscribers version: <strong>%s</strong>', 'email-subscribers' ), $es_current_version );
 		}
 
 		return $es_text;
@@ -912,21 +868,21 @@ class es_cls_registerhook {
 	public static function es_register_post_type() {
 
 		$labels = array(
-			'name'               => __( 'Templates', ES_TDOMAIN ),
-			'singular_name'      => __( 'Templates', ES_TDOMAIN ),
-			'add_new'            => __( 'Add new Template', ES_TDOMAIN ),
-			'add_new_item'       => __( 'Add new Template', ES_TDOMAIN ),
-			'edit_item'          => __( 'Edit Templates', ES_TDOMAIN ),
-			'new_item'           => __( 'New Templates', ES_TDOMAIN ),
-			'all_items'          => __( 'Templates', ES_TDOMAIN ),
-			'view_item'          => __( 'View Templates', ES_TDOMAIN ),
-			'search_items'       => __( 'Search Templates', ES_TDOMAIN ),
-			'not_found'          => __( 'No Templates found', ES_TDOMAIN ),
-			'not_found_in_trash' => __( 'No Templates found in Trash', ES_TDOMAIN ),
-			'parent_item_colon'  => __( '', ES_TDOMAIN ),
-			'menu_name'          => __( 'Email Subscribers', ES_TDOMAIN ),
-			'featured_image'     => __( 'Thumbnail (For Visual Representation only)', ES_TDOMAIN ),
-			'set_featured_image' => __( 'Set thumbnail', ES_TDOMAIN )
+			'name'               => __( 'Templates', 'email-subscribers' ),
+			'singular_name'      => __( 'Templates', 'email-subscribers' ),
+			'add_new'            => __( 'Add new Template', 'email-subscribers' ),
+			'add_new_item'       => __( 'Add new Template', 'email-subscribers' ),
+			'edit_item'          => __( 'Edit Templates', 'email-subscribers' ),
+			'new_item'           => __( 'New Templates', 'email-subscribers' ),
+			'all_items'          => __( 'Templates', 'email-subscribers' ),
+			'view_item'          => __( 'View Templates', 'email-subscribers' ),
+			'search_items'       => __( 'Search Templates', 'email-subscribers' ),
+			'not_found'          => __( 'No Templates found', 'email-subscribers' ),
+			'not_found_in_trash' => __( 'No Templates found in Trash', 'email-subscribers' ),
+			'parent_item_colon'  => __( '', 'email-subscribers' ),
+			'menu_name'          => __( 'Email Subscribers', 'email-subscribers' ),
+			'featured_image'     => __( 'Thumbnail (For Visual Representation only)', 'email-subscribers' ),
+			'set_featured_image' => __( 'Set thumbnail', 'email-subscribers' )
 		);
 
 		$args = array(
@@ -963,8 +919,8 @@ class es_cls_registerhook {
 		$date = $existing_columns['date'];
 		unset( $existing_columns['date'] );
 
-		$existing_columns['es_templ_type']      = __( 'Template Type', ES_TDOMAIN );
-		$existing_columns['es_templ_thumbnail'] = __( 'Thumbnail', ES_TDOMAIN );
+		$existing_columns['es_templ_type']      = __( 'Template Type', 'email-subscribers' );
+		$existing_columns['es_templ_thumbnail'] = __( 'Thumbnail', 'email-subscribers' );
 		$existing_columns['date']               = $date;
 
 		return $existing_columns;
@@ -1016,7 +972,7 @@ class es_cls_registerhook {
 		$es_templ_type               = get_post_meta( $post->ID, 'es_template_type', true );
 		$page                        = ( ( $es_templ_type == 'Newsletter' ) ? 'es-sendemail' : 'es-notification' );
 		$preview_url                 = ES_ADMINURL . "?page=" . $page . "&amp;ac=preview&did=" . $post->ID;
-		$actions['preview_campaign'] = '<a class="es-preview-template" target="_blank" href="' . $preview_url . '" >' . __( 'Preview', ES_TDOMAIN ) . '</a>';
+		$actions['preview_campaign'] = '<a class="es-preview-template" target="_blank" href="' . $preview_url . '" >' . __( 'Preview', 'email-subscribers' ) . '</a>';
 
 		return $actions;
 	}
@@ -1038,21 +994,21 @@ class es_cls_registerhook {
 			?>
             <p style="margin-top: 0em; !important;">
 				<?php
-				echo sprintf( __( '%s for Post Notification: {{POSTTITLE}}', ES_TDOMAIN ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keyword', ES_TDOMAIN ) . '</a>' );
+				echo sprintf( __( '%s for Post Notification: {{POSTTITLE}}', 'email-subscribers' ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keyword', 'email-subscribers' ) . '</a>' );
 				?>
             </p>
 			<?php
 		}
 		?>
         <p>
-            <label for="tag-link"><?php echo __( 'Select your Email Template Type', ES_TDOMAIN ); ?></label><br/>
+            <label for="tag-link"><?php echo __( 'Select your Email Template Type', 'email-subscribers' ); ?></label><br/>
             <select name="es_template_type" id="es_template_type">
                 <option value='Newsletter' <?php if ( $es_templ_type == 'Newsletter' ) {
 					echo 'selected="selected"';
-				} ?>><?php echo __( 'Newsletter', ES_TDOMAIN ); ?></option>
+				} ?>><?php echo __( 'Newsletter', 'email-subscribers' ); ?></option>
                 <option value='Post Notification' <?php if ( $es_templ_type == 'Post Notification' ) {
 					echo 'selected="selected"';
-				} ?>><?php echo __( 'Post Notification', ES_TDOMAIN ); ?></option>
+				} ?>><?php echo __( 'Post Notification', 'email-subscribers' ); ?></option>
             </select>
         </p>
 		<?php
@@ -1088,7 +1044,7 @@ class es_cls_registerhook {
 			$content = $GLOBALS['wp_embed']->autoembed( $content );
 		}
 		$content = wpautop( $content );
-		// $content = do_shortcode( shortcode_unautop( $content ) );
+		$content = do_shortcode( shortcode_unautop( $content ) );
 		$data['content'] = $content;
 		$data['tmpl_id'] = $tmpl_id;
 		$data            = apply_filters( 'es_after_process_template_body', $data );
@@ -1114,7 +1070,7 @@ class es_cls_registerhook {
 		jQuery('#submitdiv .submitbox #minor-publishing-actions').after(prvw_button)
 		prvw_button.fadeIn('fast');</script>";
 		$preview_button = '<style>.es_preview_button{display: none;padding: 10px 10px 0;}</style><div id="" class="es_preview_button">
-									<a href="' . $preview_url . '" target="_blank" class="button button-primary es_preview">' . __( 'Preview Template', ES_TDOMAIN ) . '</a>
+									<a href="' . $preview_url . '" target="_blank" class="button button-primary es_preview">' . __( 'Preview Template', 'email-subscribers' ) . '</a>
 									<div class="clear"></div></div>';
 		echo $preview_button;
 		echo $script;
@@ -1133,8 +1089,8 @@ class es_cls_registerhook {
 			?>
             <p>
 				<?php
-				echo sprintf( __( '%s for Post Notification: {{NAME}}, {{EMAIL}}, {{DATE}}, {{POSTTITLE}}, {{POSTIMAGE}}, {{POSTEXCERPT}}, {{POSTDESC}}, {{POSTAUTHOR}}, {{POSTLINK}}, {{POSTLINK-WITHTITLE}}, {{POSTLINK-ONLY}}, {{POSTFULL}}', ES_TDOMAIN ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', ES_TDOMAIN ) . '</a>' );
-				echo sprintf( __( '<br/><br/>%s for Newsletter: {{NAME}}, {{EMAIL}}', ES_TDOMAIN ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-newsletters/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', ES_TDOMAIN ) . '</a>' );
+				echo sprintf( __( '%s for Post Notification: {{NAME}}, {{EMAIL}}, {{DATE}}, {{POSTTITLE}}, {{POSTIMAGE}}, {{POSTEXCERPT}}, {{POSTDESC}}, {{POSTAUTHOR}}, {{POSTLINK}}, {{POSTLINK-WITHTITLE}}, {{POSTLINK-ONLY}}, {{POSTFULL}}', 'email-subscribers' ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', 'email-subscribers' ) . '</a>' );
+				echo sprintf( __( '<br/><br/>%s for Newsletter: {{NAME}}, {{EMAIL}}', 'email-subscribers' ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-newsletters/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', 'email-subscribers' ) . '</a>' );
 				?>
             </p>
 			<?php
@@ -1149,7 +1105,7 @@ class es_cls_registerhook {
 			?>
             <p>
 				<?php
-				echo sprintf( __( '%s for Post Notification: {{NAME}}, {{EMAIL}}, {{DATE}}, {{POSTTITLE}}, {{POSTIMAGE}}, {{POSTEXCERPT}}, {{POSTDESC}}, {{POSTAUTHOR}}, {{POSTLINK}}, {{POSTLINK-WITHTITLE}}, {{POSTLINK-ONLY}}, {{POSTFULL}}', ES_TDOMAIN ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', ES_TDOMAIN ) . '</a>' );
+				echo sprintf( __( '%s for Post Notification: {{NAME}}, {{EMAIL}}, {{DATE}}, {{POSTTITLE}}, {{POSTIMAGE}}, {{POSTEXCERPT}}, {{POSTDESC}}, {{POSTAUTHOR}}, {{POSTLINK}}, {{POSTLINK-WITHTITLE}}, {{POSTLINK-ONLY}}, {{POSTFULL}}', 'email-subscribers' ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-post-notifications/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', 'email-subscribers' ) . '</a>' );
 				?>
             </p>
 			<?php
@@ -1157,7 +1113,7 @@ class es_cls_registerhook {
 			?>
             <p>
 				<?php
-				echo sprintf( __( '%s for Newsletter: {{NAME}}, {{EMAIL}}', ES_TDOMAIN ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-newsletters/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', ES_TDOMAIN ) . '</a>' );
+				echo sprintf( __( '%s for Newsletter: {{NAME}}, {{EMAIL}}', 'email-subscribers' ), '<a href="https://www.icegram.com/documentation/es-what-are-the-available-keywords-in-the-newsletters/?utm_source=es&utm_medium=in_app&utm_campaign=view_docs_help_page" target="_blank">' . __( 'Available Keywords', 'email-subscribers' ) . '</a>' );
 				?>
             </p>
 			<?php
@@ -1181,10 +1137,8 @@ class es_cls_registerhook {
 		$es_name  = $instance['es_name'];
 		$es_group = $instance['es_group'];
 		$es_pre   = $instance['es_pre'];
-
 		ob_start();
 		?>
-
         <div class="es_form_container">
             <form class="es_<?php echo $es_pre ?>_form" data-es_form_id="es_<?php echo $es_pre ?>_form">
 				<?php if ( $es_desc != "" ) { ?>
@@ -1192,14 +1146,14 @@ class es_cls_registerhook {
 				<?php } ?>
 				<?php if ( $es_name == "YES" ) { ?>
                     <div class="es_lablebox">
-                        <label class="es_<?php echo $es_pre ?>_form_name"><?php echo __( 'Name', ES_TDOMAIN ); ?></label>
+                        <label class="es_<?php echo $es_pre ?>_form_name"><?php echo __( 'Name', 'email-subscribers' ); ?></label>
                     </div>
                     <div class="es_textbox">
                         <input type="text" id="es_txt_name" class="es_textbox_class" name="es_txt_name" value="" maxlength="60">
                     </div>
 				<?php } ?>
                 <div class="es_lablebox">
-                    <label class="es_<?php echo $es_pre ?>_form_email"><?php echo __( 'Email *', ES_TDOMAIN ); ?></label>
+                    <label class="es_<?php echo $es_pre ?>_form_email"><?php echo __( 'Email *', 'email-subscribers' ); ?></label>
                 </div>
                 <div class="es_textbox">
                     <input type="email" id="es_txt_email" class="es_textbox_class" name="es_txt_email" value="" maxlength="60" required>
@@ -1208,23 +1162,24 @@ class es_cls_registerhook {
 					echo GDPR::consent_checkboxes();
 				} ?>
                 <div class="es_button">
-                    <input type="submit" id="es_txt_button" class="es_textbox_button es_submit_button" name="es_txt_button" value="<?php echo __( 'Subscribe', ES_TDOMAIN ); ?>">
+                    <input type="submit" id="es_txt_button" class="es_textbox_button es_submit_button" name="es_txt_button" value="<?php echo __( 'Subscribe', 'email-subscribers' ); ?>">
                 </div>
                 <div class="es_msg" id="es_<?php echo $es_pre ?>_msg">
                     <span id="es_msg"></span>
                 </div>
 				<?php if ( $es_name != "YES" ) { ?>
                     <input type="hidden" id="es_txt_name" name="es_txt_name" value="">
-				<?php } ?>
+				<?php } 
+				$es_req_style = (!is_rtl()) ? 'position:absolute; left: -5000px' : 'position:absolute; right: -5000px' ;
+				?>
+				<div style="<?php echo $es_req_style ?>"><input type="text" name="es_required_field" class="es_required_field" tabindex="-1" autocomplete="off"/></div>
                 <input type="hidden" id="es_txt_group" name="es_txt_group" value="<?php echo $es_group; ?>">
 				<?php $nonce = wp_create_nonce( 'es-subscribe' ); ?>
                 <input type="hidden" name="es-subscribe" id="es-subscribe" value="<?php echo $nonce; ?>"/>
             </form>
 			<?php do_action( 'es_after_form' ) ?>
         </div>
-
-		<?php
-		return $es_form = ob_get_clean();
+        <?php return $es_form = ob_get_clean();
 
 	}
 
@@ -1276,8 +1231,8 @@ function es_sync_registereduser( $user_id ) {
 
 class es_widget_register extends WP_Widget {
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_text elp-widget', 'description' => __( ES_PLUGIN_DISPLAY, ES_TDOMAIN ), ES_PLUGIN_NAME );
-		parent::__construct( ES_PLUGIN_NAME, __( ES_PLUGIN_DISPLAY, ES_TDOMAIN ), $widget_ops );
+		$widget_ops = array( 'classname' => 'widget_text elp-widget', 'description' => __( ES_PLUGIN_DISPLAY, 'email-subscribers' ), ES_PLUGIN_NAME );
+		parent::__construct( ES_PLUGIN_NAME, __( ES_PLUGIN_DISPLAY, 'email-subscribers' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -1320,22 +1275,22 @@ class es_widget_register extends WP_Widget {
 		$es_group = $instance['es_group'];
 		?>
         <p>
-            <label for="<?php echo $this->get_field_id( 'es_title' ); ?>"><?php echo __( 'Widget Title', ES_TDOMAIN ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'es_title' ); ?>"><?php echo __( 'Widget Title', 'email-subscribers' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'es_title' ); ?>" name="<?php echo $this->get_field_name( 'es_title' ); ?>" type="text" value="<?php echo $es_title; ?>"/>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'es_desc' ); ?>"><?php echo __( 'Short description about subscription form', ES_TDOMAIN ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'es_desc' ); ?>"><?php echo __( 'Short description about subscription form', 'email-subscribers' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'es_desc' ); ?>" name="<?php echo $this->get_field_name( 'es_desc' ); ?>" type="text" value="<?php echo $es_desc; ?>"/>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'es_name' ); ?>"><?php echo __( 'Display Name Field', ES_TDOMAIN ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'es_name' ); ?>"><?php echo __( 'Display Name Field', 'email-subscribers' ); ?></label>
             <select class="widefat" id="<?php echo $this->get_field_id( 'es_name' ); ?>" name="<?php echo $this->get_field_name( 'es_name' ); ?>">
-                <option value="YES" <?php $this->es_selected( $es_name == 'YES' ); ?>><?php echo __( 'YES', ES_TDOMAIN ); ?></option>
-                <option value="NO" <?php $this->es_selected( $es_name == 'NO' ); ?>><?php echo __( 'NO', ES_TDOMAIN ); ?></option>
+                <option value="YES" <?php $this->es_selected( $es_name == 'YES' ); ?>><?php echo __( 'YES', 'email-subscribers' ); ?></option>
+                <option value="NO" <?php $this->es_selected( $es_name == 'NO' ); ?>><?php echo __( 'NO', 'email-subscribers' ); ?></option>
             </select>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'es_group' ); ?>"><?php echo __( 'Subscriber Group', ES_TDOMAIN ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'es_group' ); ?>"><?php echo __( 'Subscriber Group', 'email-subscribers' ); ?></label>
             <select class="widefat" name="<?php echo $this->get_field_name( 'es_group' ); ?>" id="<?php echo $this->get_field_id( 'es_group' ); ?>">
 				<?php
 				$groups = array();

@@ -24,15 +24,15 @@ class DeactivationSurvey {
     if(!$this->shouldShow()) {
        return;
      }
-    wp_register_script( 'survey_js', ES_URL . 'deactivationSurvey/js.js' );
+    wp_register_script( 'survey_js', ES_URL . 'base/deactivationSurvey/js.js' );
     wp_enqueue_script( 'survey_js' );
    }
-
+   
    public function css() {
      if(!$this->shouldShow()) {
        return;
      }
-     wp_register_style( 'survey_css', ES_URL . 'deactivationSurvey/css.css' );
+     wp_register_style( 'survey_css', ES_URL . 'base/deactivationSurvey/css.css' );
      wp_enqueue_style( 'survey_css' );
    }
 
@@ -40,6 +40,6 @@ class DeactivationSurvey {
      if(!$this->shouldShow()) {
        return;
      }
-     include_once(ES_DIR.'deactivationSurvey'.DIRECTORY_SEPARATOR.'index.html');
+     include_once(ES_DIR.'base'.DIRECTORY_SEPARATOR.'deactivationSurvey'.DIRECTORY_SEPARATOR.'index.html');
    }
 }
