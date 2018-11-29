@@ -3,7 +3,7 @@
  * Plugin Name: Email Subscribers & Newsletters
  * Plugin URI: https://www.icegram.com/
  * Description: Add subscription forms on website, send HTML newsletters & automatically notify subscribers about new blog posts once it is published.
- * Version: 3.5.15
+ * Version: 3.5.17
  * Author: Icegram
  * Author URI: https://www.icegram.com/
  * Requires at least: 3.9
@@ -127,13 +127,22 @@ function es_update_current_version_and_date( $upgrader_object, $options ) {
 	}
 }
 
-
-require_once(ES_DIR.'base'.DIRECTORY_SEPARATOR.'deactivationSurvey'.DIRECTORY_SEPARATOR.'DeactivationSurvey.php'); 
-add_action( 'plugins_loaded', 'setupDeactivationSurvey' );
-function setupDeactivationSurvey() {
-    $survey = new deactivationSurvey($this);
-    $survey->init();
-  }
-
 register_activation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_activation' ) );
 register_deactivation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_deactivation' ) );
+
+
+add_action( 'plugins_loaded', 'es_setupDeactivationSurvey' );
+function es_setupDeactivationSurvey() {
+    $plugin_dir_path = dirname(__FILE__);
+	if ( ! class_exists( 'deactivationSurvey' ) ) {
+        require_once $plugin_dir_path.'/deactivationSurvey/DeactivationSurvey.php';
+	}
+
+    $link_form       = 'https://poll.fm/101413671';
+    $link_js_file    = 'https://secure.polldaddy.com/p/101413671.js';
+    $slug            = 'email-subscribers';
+
+    $survey = new deactivationSurvey($link_form, $link_js_file, $slug);
+    $survey->init();
+
+}

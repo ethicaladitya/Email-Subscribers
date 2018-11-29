@@ -1,9 +1,10 @@
 console.log('in js');
 jQuery(function(){
 console.log('in js12');
+
   var deactivateLink = jQuery('#the-list').find('[data-slug="email-subscribers"] span.deactivate a');
-  var overlay = jQuery('#es-deactivate-survey');
-  var closeButton = jQuery('#es-deactivate-survey-close');
+  var overlay = jQuery('#deactivate-survey');
+  var closeButton = jQuery('#deactivate-survey-close');
   var formOpen = false;
 
   deactivateLink.on('click', function(event) {
