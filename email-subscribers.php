@@ -130,7 +130,6 @@ function es_update_current_version_and_date( $upgrader_object, $options ) {
 register_activation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_activation' ) );
 register_deactivation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_deactivation' ) );
 
-
 add_action( 'plugins_loaded', 'es_setupDeactivationSurvey' );
 function es_setupDeactivationSurvey() {
     $plugin_dir_path = dirname(__FILE__);
@@ -138,11 +137,9 @@ function es_setupDeactivationSurvey() {
         require_once $plugin_dir_path.'/deactivationSurvey/DeactivationSurvey.php';
 	}
 
-    $link_form       = 'https://poll.fm/101413671';
-    $link_js_file    = 'https://secure.polldaddy.com/p/101413671.js';
-    $slug            = 'email-subscribers';
+    $link_form     	= 'https://poll.fm/10143671';
+    $link_js_file   = 'https://secure.polldaddy.com/p/10143671.js';
+    $slug           = 'email-subscribers';
 
-    $survey = new deactivationSurvey($link_form, $link_js_file, $slug);
-    $survey->init();
-
+	new deactivationSurvey($link_form, $link_js_file, $slug);
 }
