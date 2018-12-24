@@ -14,6 +14,7 @@ class DeactivationSurvey {
                                           'link_form_js' => $link_form_js,
                                           );
     $this->init();
+
 		}
 
   public function init() {
@@ -41,7 +42,7 @@ class DeactivationSurvey {
      }
     wp_register_script( 'survey_js', $this->plugin_url . 'survey.js' );
     wp_enqueue_script( 'survey_js');
-    wp_localize_script( 'survey_js',  'ig_deactivation_data', $slug);
+    wp_localize_script( 'survey_js',  'ig_deactivation_data', $ig_deactivation_data);
    }
 
 
