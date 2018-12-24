@@ -64,7 +64,9 @@ ES.prototype = {
 		} else if ( response && response.success === 'already-exist' ) {
 			es_msg_text = es_widget_page_notices.es_email_exists;
 		} else if ( response && response.error === 'no-email-address' ) {
-			es_msg_text = es_widget_page_notices.es_email_notice;
+            es_msg_text = es_widget_page_notices.es_email_notice;
+        } else if ( response && response.error === 'rate-limit' ) {
+            es_msg_text = es_widget_page_notices.es_rate_limit_notice;
 		} else if( response.success && response.success === 'subscribed-pending-doubleoptin' ) {
 			es_msg_text = es_widget_page_notices.es_success_notice;
 			jQuery(form)[0].reset();

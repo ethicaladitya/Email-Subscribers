@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		//	No errors found, we can add this Group to the table
 		if ( $es_error_found == FALSE ) {
-			if(count($csv) > 0) {
+        if(count($csv) > 0) {
 				$inserted = 0;
 				$duplicate = 0;
 				$invalid = 0;

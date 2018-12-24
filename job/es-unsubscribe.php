@@ -52,14 +52,14 @@ if( (isset($_GET['es'])) && ($_GET['es'] == "unsubscribe") ) {
 					$message = esc_html(stripslashes($es_c_message2));
 				}
 				if($message == "") {
-					$message = __( 'Oops.. We are getting some technical error. Please try again or contact admin.', 'email-subscribers' );
+					$message = __( 'Oops.. We are getting some technical error. Please try again or contact admin.', ES_TDOMAIN );
 				}
 				echo $message;
 			} else {
 				$message = esc_html(stripslashes($es_c_message2));
 				$message = str_replace("\r\n", "<br />", $message);
 				if($message == "") {
-					$message = __( 'Oops.. We are getting some technical error. Please try again or contact admin.', 'email-subscribers' );
+					$message = __( 'Oops.. We are getting some technical error. Please try again or contact admin.', ES_TDOMAIN );
 				}
 				echo $message;
 			}

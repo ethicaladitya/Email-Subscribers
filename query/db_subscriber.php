@@ -138,6 +138,14 @@ class es_cls_dbquery {
 				if ( $result > 0 ) {
 					return "ext";
 				} else {
+
+					// Restrict too many requests
+					$timeout = es_cls_subscription_throttaling::throttle();
+
+					if($timeout > 0) {
+						return 'rate-limit';
+					}
+
 					$data['guid'] = es_cls_common::es_generate_guid(60);
 					$sql = $wpdb->prepare( "INSERT INTO {$wpdb->prefix}es_emaillist
 											(es_email_name, es_email_mail, es_email_status, es_email_created, es_email_viewcount, es_email_group, es_email_guid) VALUES(%s, %s, %s, %s, %d, %s, %s)", 
@@ -171,9 +179,11 @@ class es_cls_dbquery {
 					return "sus";
 				}
 			} elseif( $action == "update" ) {
+
 				$sSql = $wpdb->prepare( "SELECT *
 											FROM {$wpdb->prefix}es_emaillist
 											WHERE es_email_mail = %s AND es_email_group = %s AND es_email_id != %d", $data["es_email_mail"], trim($data["es_email_group"]), $data["es_email_id"] );
+
 				$result = $wpdb->get_var($sSql);
 				if ( $result > 0 ) {
 					return "ext";
@@ -294,7 +304,7 @@ class es_cls_dbquery {
 		$es_result = $wpdb->get_results( $check_if_subscriber_exists, ARRAY_A );
 
 		if ( !empty( $es_result ) && count( $es_result ) > 0 ) {
-			if( $es_result[0]['es_email_status'] == "Confirmed" || $es_result[0]['es_email_status'] == "Single Opt In" ) {
+			if( $es_result[0]['es_email_status'] == "Unconfirmed" || $es_result[0]['es_email_status'] == "Confirmed" || $es_result[0]['es_email_status'] == "Single Opt In" ) {
 				return "ext";
 			} else {
 				$action = "";
@@ -309,6 +319,7 @@ class es_cls_dbquery {
 				} elseif ( array_key_exists( 'es_af_nonce', $data ) ) {
 					$form['es_af_nonce'] = $data['es_af_nonce'];
 				}
+
 				$action = es_cls_dbquery::es_view_subscriber_ins($form, $action = "update");
 				return $action;
 			}

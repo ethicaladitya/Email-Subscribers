@@ -200,7 +200,7 @@ class es_cls_default {
 			$form["es_email_name"] = "Admin";
 			$form["es_email_group"] = "Test";
 			$form["es_email_status"] = "Confirmed";
-			es_cls_dbquery::es_view_subscriber_ins($form, "insert");
+			$res = es_cls_dbquery::es_view_subscriber_ins($form, "insert");
 			if('sus' === $res){
 				update_option( 'ig_es_default_subscriber_imported', 'yes' );
 			}

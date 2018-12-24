@@ -93,7 +93,7 @@ class es_cls_registerhook {
 			es_cls_default::es_subscriber_default();
 			es_cls_default::es_template_default();
 			update_option( 'ig_es_sample_data_imported', 'yes' );
-			
+
 			//current version and date on activation
 			$es_plugin_meta_data = get_plugin_data( WP_PLUGIN_DIR . '/email-subscribers/email-subscribers.php' );
 			$es_current_version  = $es_plugin_meta_data['Version'];
@@ -201,7 +201,7 @@ class es_cls_registerhook {
 		add_submenu_page( 'es-view-subscribers', __( 'Settings', 'email-subscribers' ),
 			__( 'Settings', 'email-subscribers' ), 'manage_options', 'es-settings', array( 'es_cls_intermediate', 'es_settings' ) );
 
-        add_submenu_page( 'es-view-subscribers', __( 'Tools', 'email-subscribers' ),
+		add_submenu_page( 'es-view-subscribers', __( 'Tools', 'email-subscribers' ),
 			__( 'Tools', 'email-subscribers' ), 'manage_options', 'es-tools', array( 'es_cls_intermediate', 'es_tools' ) );
 
 		add_submenu_page( 'es-view-subscribers', __( 'Reports', 'email-subscribers' ),
@@ -217,84 +217,89 @@ class es_cls_registerhook {
 	}
 
 	//upsale functions
-	public static function add_readymade_template_link(){
+	public static function add_readymade_template_link() {
 		global $post, $pagenow;
 		$screen = get_current_screen();
-		if (  $screen->id === 'edit-es_template' ) {
-		?>
-	        <script type="text/javascript">
-	            jQuery(document).ready( function($){
-	                jQuery(".page-title-action").after("<span class='es_upsale' >Save time using beautiful readymade templates <a href='https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale' target='_blank'>Checkout here</a></span>");
-	            });
-	        </script>
-	    <?php
-	    	}
-			if ( in_array( $screen->id, array( 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail' ), true ) ) {
-				?>
-				<span class="es_upsale" ><?php _e( 'Save time using beautiful readymade templates <a href="https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Checkout here</a>', 'email-subscribers' ) ?></span>
-				<?php
-			}
+		if ( $screen->id === 'edit-es_template' ) {
+			?>
+            <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+                    jQuery(".page-title-action").after("<span class='es_upsale' >Save time using beautiful readymade templates <a href='https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale' target='_blank'>Checkout here</a></span>");
+                });
+            </script>
+			<?php
+		}
+		if ( in_array( $screen->id, array( 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail' ), true ) ) {
+			?>
+            <span class="es_upsale"><?php _e( 'Save time using beautiful readymade templates <a href="https://www.icegram.com/documentation/how-ready-made-template-in-in-email-subscribers-look/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Checkout here</a>', 'email-subscribers' ) ?></span>
+			<?php
+		}
 
 	}
 
-	public static function add_test_send_newsletter_link(){
+	public static function add_test_send_newsletter_link() {
 		echo "<span>Test Newsletter Emails Before Sending</span>";
 	}
-	public static function add_captcha_link(){
+
+	public static function add_captcha_link() {
 		?>
-			<tr class="es-admin active-settings">
-			<td  class="es_upsale"><?php _e('Enable captcha to protect list from bot attacks <a href="https://www.icegram.com/documentation/es-how-to-add-captcha-in-subscribe-form-of-email-subscribers/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>', 'email-subscribers' )?></td>
-			</tr>
+        <tr class="es-admin active-settings">
+            <td class="es_upsale"><?php _e( 'Enable captcha to protect list from bot attacks <a href="https://www.icegram.com/documentation/es-how-to-add-captcha-in-subscribe-form-of-email-subscribers/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>', 'email-subscribers' ) ?></td>
+        </tr>
 		<?php
 	}
 
-	public static function add_optin_optout_link(){
+	public static function add_optin_optout_link() {
 		echo '<tr class="es-signup-confirmation hidden"><td><span  class="es_upsale">Customize confirmation and unsubscribe page <a href="https://www.icegram.com/documentation/how-to-change-simple-unsubscribe-confirmation-message-with-some-beautiful-design-page/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a></span></td></tr>';
 	}
 
-	public static function add_cron_service(){
+	public static function add_cron_service() {
 		$screen = get_current_screen();
-		if (  $screen->id === 'email-subscribers_page_es-settings' ) {
-			?> 
-				<tr class="es-cron hidden"><td><span class="es_upsale"><?php _e('Set automatic cron service <a href="https://www.icegram.com/documentation/how-to-enable-automatic-cron-in-es/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>')?></span></td></tr>
+		if ( $screen->id === 'email-subscribers_page_es-settings' ) {
+			?>
+            <tr class="es-cron hidden">
+                <td><span class="es_upsale"><?php _e( 'Set automatic cron service <a href="https://www.icegram.com/documentation/how-to-enable-automatic-cron-in-es/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>' ) ?></span></td>
+            </tr>
 			<?php
-		}elseif( in_array( $screen->id, array( 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail' ), true ) ){
-			?> 
-				<span class="es_upsale"><?php _e('Set automatic cron service <a href="https://www.icegram.com/documentation/how-to-enable-automatic-cron-in-es/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>')?></span>
+		} elseif ( in_array( $screen->id, array( 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail' ), true ) ) {
+			?>
+            <span class="es_upsale"><?php _e( 'Set automatic cron service <a href="https://www.icegram.com/documentation/how-to-enable-automatic-cron-in-es/?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale" target="_blank">Lean more</a>' ) ?></span>
 			<?php
 		}
 	}
 
-	public static function add_spam_score_utm_link(){
+	public static function add_spam_score_utm_link() {
 		global $post, $pagenow;
-		if ($post->post_type !== 'es_template') return;
+		if ( $post->post_type !== 'es_template' ) {
+			return;
+		}
 		if ( $pagenow !== 'post-new.php' ) {
-		?>
-			<script>
-				jQuery('#submitdiv').after('<div class="es_upsale">Track email leads in Google using UTM tracking <a href="https://www.icegram.com/documentation/how-to-add-utm-parameters-to-email?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale">Learn how</a></div>');
-			</script>
-		<?php
+			?>
+            <script>
+                jQuery('#submitdiv').after('<div class="es_upsale">Track email leads in Google using UTM tracking <a href="https://www.icegram.com/documentation/how-to-add-utm-parameters-to-email?utm_source=es&utm_medium=in_app&utm_campaign=es_upsale">Learn how</a></div>');
+            </script>
+			<?php
 		}
 	}
-	
+
 	public static function es_load_scripts() {
 		$screen = get_current_screen();
 		if ( in_array( $screen->id, array( 'toplevel_page_es-view-subscribers', 'es_template', 'edit-es_template', 'email-subscribers_page_es-notification', 'email-subscribers_page_es-notification', 'email-subscribers_page_es-sendemail', 'email-subscribers_page_es-settings', 'email-subscribers_page_es-sentmail' ), true ) ) {
 			?>
-			<style type="text/css">
-				.es_tmpl_select{
-					width: 50%;
-				}
+            <style type="text/css">
+                .es_tmpl_select {
+                    width: 50%;
+                }
 
-				.es_upsale{
-					margin-left: 2px;
-				    vertical-align: text-bottom;
-				    color: green;
-				    background: #fbfbcd;
-				    padding: 2px;
-				    border: 1px dashed;
-				}
-			</style>
+                .es_upsale {
+                    margin-left: 2px;
+                    vertical-align: text-bottom;
+                    color: green;
+                    background: #fbfbcd;
+                    padding: 2px;
+                    border: 1px dashed;
+                }
+            </style>
 			<?php
 		}
 		if ( ! empty( $_GET['page'] ) ) {
@@ -366,14 +371,16 @@ class es_cls_registerhook {
 		wp_register_script( 'es-widget-page', ES_URL . 'widget/es-widget-page.js', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'es-widget-page' );
 		$es_select_params = array(
-			'es_email_notice'    => _x( 'Please enter email address', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_success_message' => _x( 'Successfully Subscribed.', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_success_notice'  => _x( 'Your subscription was successful! Kindly check your mailbox and confirm your subscription. If you don\'t see the email within a few minutes, check the spam/junk folder.', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_email_exists'    => _x( 'Email Address already exists!', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_error'           => _x( 'Oops.. Unexpected error occurred.', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_invalid_email'   => _x( 'Invalid email address', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_try_later'       => _x( 'Please try after some time', 'widget-page-enhanced-select', 'email-subscribers' ),
-			'es_ajax_url'        => admin_url( 'admin-ajax.php' ),
+			'es_email_notice'      => _x( 'Please enter email address', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_rate_limit_notice' => _x( 'You need to wait for sometime before subscribing again', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_success_message'   => _x( 'Successfully Subscribed.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_success_notice'    => _x( 'Your subscription was successful! Kindly check your mailbox and confirm your subscription. If you don\'t see the email within a few minutes, check the spam/junk folder.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_email_exists'      => _x( 'Email Address already exists!', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_error'             => _x( 'Oops.. Unexpected error occurred.', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_invalid_email'     => _x( 'Invalid email address', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_try_later'         => _x( 'Please try after some time', 'widget-page-enhanced-select', 'email-subscribers' ),
+			'es_ajax_url'          => admin_url( 'admin-ajax.php' ),
+
 		);
 		wp_localize_script( 'es-widget-page', 'es_widget_page_notices', $es_select_params );
 
@@ -452,6 +459,10 @@ class es_cls_registerhook {
 
 		if ( get_option( 'current_sa_email_subscribers_db_version' ) === '3.3.6' ) {
 			es_cls_registerhook::es_upgrade_database_for_3_4_0();
+		}
+
+		if ( get_option( 'current_sa_email_subscribers_db_version' ) === '3.4.0' ) {
+			es_cls_registerhook::es_upgrade_database_for_3_5_16();
 		}
 	}
 
@@ -789,6 +800,30 @@ class es_cls_registerhook {
 
 	}
 
+	/**
+	 * Add es_subscriber_ips table to handle rate limit.
+	 * ES version 3.5.16 onwards
+	 */
+	public static function es_upgrade_database_for_3_5_16() {
+
+		global $wpdb;
+
+		$charset_collate         = $wpdb->get_charset_collate();
+		$es_subscriber_ips_table = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}es_subscriber_ips (
+									ip varchar(45) NOT NULL, 
+									created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+									PRIMARY KEY  (created_on, ip),
+									KEY ip (ip)
+							  ) $charset_collate";
+
+
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $es_subscriber_ips_table );
+
+		update_option( 'current_sa_email_subscribers_db_version', '3.5.16' );
+	}
+
+
 	// Function to show any notices in admin section
 	public static function es_add_admin_notices() {
 
@@ -798,28 +833,28 @@ class es_cls_registerhook {
 		}
 
 		// Show if - more than 2 post notifications or Newsletters sent OR more than 10 subscribers
-		$total_subscribers = es_cls_dbquery::es_view_subscriber_count( 0 );
-		$total_email_sent  = es_cls_sentmail::es_sentmail_count( $id = 0 );
-		$es_star_review    = get_option( 'es_star_review_email_subscribers' );
-		$es_rating_text = array();
+		$total_subscribers             = es_cls_dbquery::es_view_subscriber_count( 0 );
+		$total_email_sent              = es_cls_sentmail::es_sentmail_count( $id = 0 );
+		$es_star_review                = get_option( 'es_star_review_email_subscribers' );
+		$es_rating_text                = array();
 		$es_rating_text['star_review'] = __( 'If you like <strong>Email Subscribers</strong>, please consider leaving us a <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', 'email-subscribers' );
 		$es_rating_text['help_review'] = __( 'If you like <strong>Email Subscribers</strong>, tell us more about your experience and leave us <a target="_blank" href="https://wordpress.org/support/plugin/email-subscribers/reviews/?filter=5#new-post">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from the team in advance!', 'email-subscribers' );
-		
+
 		if ( ( $total_subscribers >= 10 || $total_email_sent > 2 ) && $es_star_review != 'no' ) {
-			$key = array_rand($es_rating_text);
-			$es_rating_text = $es_rating_text[$key]; 
+			$key            = array_rand( $es_rating_text );
+			$es_rating_text = $es_rating_text[ $key ];
 			echo '<div class="notice notice-warning" style="background-color: #FFF;"><p style="letter-spacing: 0.6px;">' . $es_rating_text . ' <a style="float:right" class="es-admin-btn es-admin-btn-secondary" href="?dismiss_admin_notice=1&option_name=es_star_review">' . __( 'No, I don\'t like it', 'email-subscribers' ) . '</a></p></div>';
 		}
 
 		//halloween 2018 :start
-            $timezone_format = _x('Y-m-d', 'timezone date format');
-            $ig_current_date = strtotime(date_i18n($timezone_format));
-            $ig_offer_start = strtotime("2018-10-30");
-            $ig_offer_end = strtotime("2018-11-2");
-            if(($ig_current_date >= $ig_offer_start) && ($ig_current_date <= $ig_offer_end)) {
-                include_once('es-offer.php');
-            }
-        //halloween 2018 :end
+		$timezone_format = _x( 'Y-m-d', 'timezone date format' );
+		$ig_current_date = strtotime( date_i18n( $timezone_format ) );
+		$ig_offer_start  = strtotime( "2018-11-22" );
+		$ig_offer_end    = strtotime( "2018-11-28" );
+		if ( ( $ig_current_date >= $ig_offer_start ) && ( $ig_current_date <= $ig_offer_end ) ) {
+			include_once( 'es-offer.php' );
+		}
+		//halloween 2018 :end
 	}
 
 	// Function to dismiss any admin notice
@@ -827,10 +862,10 @@ class es_cls_registerhook {
 		if ( isset( $_GET['dismiss_admin_notice'] ) && $_GET['dismiss_admin_notice'] == '1' && isset( $_GET['option_name'] ) ) {
 			$option_name = sanitize_text_field( $_GET['option_name'] );
 			update_option( $option_name . '_email_subscribers', 'no' );
-			if($option_name === 'es_offer_halloween_done_2018'){
-                header("Location: https://www.icegram.com/latest-valid-coupons-discounts-offers-deals/?utm_source=in_app&utm_medium=es_banner&utm_campaign=halloween_2018");
-                exit();
-            }else{
+			if ( $option_name === 'es_offer_bfcm_done_2018' ) {
+				header( "Location: https://www.icegram.com/latest-valid-coupons-discounts-offers-deals/?utm_source=in_app&utm_medium=es_banner&utm_campaign=bfcm_2018" );
+				exit();
+			} else {
 				$referer = wp_get_referer();
 				wp_safe_redirect( $referer );
 				exit();
@@ -1043,8 +1078,8 @@ class es_cls_registerhook {
 		if ( isset( $GLOBALS['wp_embed'] ) ) {
 			$content = $GLOBALS['wp_embed']->autoembed( $content );
 		}
-		$content = wpautop( $content );
-		$content = do_shortcode( shortcode_unautop( $content ) );
+		$content         = wpautop( $content );
+		$content         = do_shortcode( shortcode_unautop( $content ) );
 		$data['content'] = $content;
 		$data['tmpl_id'] = $tmpl_id;
 		$data            = apply_filters( 'es_after_process_template_body', $data );
@@ -1169,24 +1204,28 @@ class es_cls_registerhook {
                 </div>
 				<?php if ( $es_name != "YES" ) { ?>
                     <input type="hidden" id="es_txt_name" name="es_txt_name" value="">
-				<?php } 
-				$es_req_style = (!is_rtl()) ? 'position:absolute; left: -5000px' : 'position:absolute; right: -5000px' ;
+				<?php
+				}
+
+				$hp_style = "position:absolute;top:-99999px;" . ( is_rtl() ? 'right' : 'left' ) . ":-99999px;z-index:-99;";
+
 				?>
-				<div style="<?php echo $es_req_style ?>"><input type="text" name="es_required_field" class="es_required_field" tabindex="-1" autocomplete="off"/></div>
                 <input type="hidden" id="es_txt_group" name="es_txt_group" value="<?php echo $es_group; ?>">
-				<?php $nonce = wp_create_nonce( 'es-subscribe' ); ?>
+	            <?php $nonce = wp_create_nonce( 'es-subscribe' ); ?>
                 <input type="hidden" name="es-subscribe" id="es-subscribe" value="<?php echo $nonce; ?>"/>
+                <label style="<?php echo $hp_style; ?>"><input type="text" name="es_hp_<?php echo wp_create_nonce('es_hp'); ?>" class="es_required_field" tabindex="-1" autocomplete="off"/></label>
             </form>
 			<?php do_action( 'es_after_form' ) ?>
         </div>
-        <?php return $es_form = ob_get_clean();
+		<?php return $es_form = ob_get_clean();
 
 	}
 
-	public static function es_add_home_url($es_url, $qs){
-		$qs = !empty($es_url) ? "?".parse_url($es_url, PHP_URL_QUERY) :  $qs ;
-		$home_url = home_url('/');
-		$es_url = $home_url . $qs;
+	public static function es_add_home_url( $es_url, $qs ) {
+		$qs       = ! empty( $es_url ) ? "?" . parse_url( $es_url, PHP_URL_QUERY ) : $qs;
+		$home_url = home_url( '/' );
+		$es_url   = $home_url . $qs;
+
 		return $es_url;
 	}
 

@@ -2,11 +2,10 @@
 Contributors: icegram, niravmehta, Mansi Shah, sandhyam, storeapps, akash123dhawade, Tarun.Parswani, malayladu
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CPTHCDC382KVA
 Author URI: https://www.icegram.com/
-Tags: subscription, nakismet
-ewsletter, email marketing, post notification, email newsletter form, email signup, email widget, newsletter signup, subscribe, subscription form, bulk emails, signup form, list builder, lead generation
+Tags: subscription, newsletter, email marketing, post notification, email newsletter form, email signup, email widget, newsletter signup, subscribe, subscription form, bulk emails, signup form, list builder, lead generation
 Requires at least: 3.9
 Tested up to: 4.9.8
-Stable tag: 3.5.15
+Stable tag: 3.5.17
 License: GPLv3
 License URI: http://www.gnu.org/licenses
 
@@ -343,7 +342,17 @@ Use our free plugin [Email Subscribers - Group Selector](https://wordpress.org/p
 
 == Changelog ==
 
+= 3.5.17 (19.11.2018) =
+
+* Update: Now, email subscription limit also check for non admin users.
+
+= 3.5.16 (14.11.2018) =
+
+* Fix: spam subscription issue.
+* Fix: Visitors were not able to subscribe.
+
 = 3.5.15 (25.10.2018) =
+
 * Fix: Extra field shown for forms on RTL sites
 
 = 3.5.14 (15.10.2018) =

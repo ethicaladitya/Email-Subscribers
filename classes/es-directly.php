@@ -8,6 +8,7 @@ function es_plugin_query_vars($vars) {
 	$vars[] = 'es';
 	return $vars;
 }
+
 add_filter('query_vars', 'es_plugin_query_vars');
 
 function es_plugin_parse_request($qstring) {

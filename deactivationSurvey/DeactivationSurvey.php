@@ -2,16 +2,22 @@
 
 class DeactivationSurvey {
 
-  function __construct( $link_form, $link_form_js, $slug ) {			
-		$this->link_form              = $link_form;
-		$this->link_js_file           = $link_form_js;
-    $this->slug                   = $slug;
-    $ig_deactivation_slugs[$slug] = $slug;
-    $this->plugin_url             = untrailingslashit( plugins_url( '/', __FILE__ ) ) .'/';
+  function __construct($script, $link_form, $link_form_js, $slug, $plugin_name) {
+    global $ig_deactivation_data;
+    $this->script              = $script;
+	$this->link_form     	   = $link_form;
+    $this->link_js_file        = $link_form_js;
+    $this->slug                = $slug;
+    $this->plugin_name         = $plugin_name;
+    $ig_deactivation_data[$slug] = array(
+                                          'link_form' => $link_form,
+                                          'link_form_js' => $link_form_js,
+                                          );
     $this->init();
 		}
 
   public function init() {
+    $this->plugin_url   = untrailingslashit( plugins_url( '/', __FILE__ ) ) .'/';
     add_action('admin_print_scripts', array($this, 'js'), 20);
     add_action('admin_print_scripts', array($this, 'css'));
     add_action('admin_footer', array($this, 'modal'));
@@ -29,14 +35,15 @@ class DeactivationSurvey {
   }
 
    public function js() {
-    global $ig_deactivation_slugs;
+    global $ig_deactivation_data;
     if(!$this->shouldShow()) {
        return;
      }
     wp_register_script( 'survey_js', $this->plugin_url . 'survey.js' );
     wp_enqueue_script( 'survey_js');
-    wp_localize_script( 'survey_js', 'data', $ig_deactivation_slugs );
-    }
+    wp_localize_script( 'survey_js',  'ig_deactivation_data', $slug);
+   }
+
 
    public function css() {
      if(!$this->shouldShow()) {
@@ -46,23 +53,25 @@ class DeactivationSurvey {
      wp_enqueue_style( 'survey_css' );
    }
 
-   public function modal() {
+    public function modal() {
+     global $ig_deactivation_data;
      if(!$this->shouldShow()) {
        return;
      }
-  ?>
-    <div class="deactivate-survey-modal" id="deactivate-survey">
-      <div class="deactivate-survey-wrap">
-        <div class="deactivate-survey">
-  
-     <center><script type="text/javascript" charset="utf-8" src="<?php echo $this->link_js_file; ?> "></script>
-     <noscript><a href="<?php echo "$this->link_form"; ?>">Why are you deactivating Email Subscribers</a></noscript></center>
-  
-        <a class="button" id="deactivate-survey-close">Close this window and deactivate Email Subscribers &rarr;</a>
-        </div>
-      </div>
-    </div>
-  <?php
-      }
+     
+        ?>
+          <div class="deactivate-survey-modal" id="deactivate-survey">
+            <div class="deactivate-survey-wrap">
+              <div class="deactivate-survey">
+        
+           <center><?php echo $this->script; ?></center>
+        
+              <a class="button" id="deactivate-survey-close">Close this window and deactivate <?php echo $this->plugin_name; ?> &rarr;</a>
+              </div>
+            </div>
+          </div>
+        <?php
+        
+    }
 }
 ?>
