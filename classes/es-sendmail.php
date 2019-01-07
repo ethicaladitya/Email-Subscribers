@@ -43,6 +43,7 @@ class es_cls_sendmail {
 					$post_id = $post_id;
 				}
 			}
+			
 
 			$notification = es_cls_notification::es_notification_prepare($post_id);
 			if ( count($notification) > 0 ) {
