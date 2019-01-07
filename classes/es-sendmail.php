@@ -285,12 +285,12 @@ class es_cls_sendmail {
 				$post_title = get_the_title( $post );
 				$blog_charset = get_option( 'blog_charset' );
 				// using html_entity_decode() because get_the_title() doesn't handle special characters.
-				$post_title = html_entity_decode( $post_title, ENT_QUOTES, $blog_charset );
+				
 				$subject = str_replace('{{POSTTITLE}}', $post_title, $subject);
-
 				$post_link = get_permalink($post_id);
 				$subject = str_replace('{{POSTLINK}}', $post_link, $subject);
 				$post_date = $post->post_modified;
+				$subject = strip_tags($subject);
 
 				// Get full post
 				$post_full = $post->post_content;

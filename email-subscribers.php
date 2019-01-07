@@ -129,20 +129,3 @@ function es_update_current_version_and_date( $upgrader_object, $options ) {
 
 register_activation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_activation' ) );
 register_deactivation_hook( ES_FILE, array( 'es_cls_registerhook', 'es_deactivation' ) );
-
-add_action( 'plugins_loaded', 'es_setupDeactivationSurvey' );
-
-function es_setupDeactivationSurvey() {
-    $plugin_dir_path = dirname(__FILE__);
-	if ( ! class_exists( 'deactivationSurvey' ) ) {
-        require_once $plugin_dir_path.'/deactivationSurvey/DeactivationSurvey.php';
-	}
-
-    $link_form       = 'https://poll.fm/10179437';
-    $link_form_js    = 'https://secure.polldaddy.com/p/10179437.js';
-    $slug            = 'email-subscribers';
-	$script			 = '<script type="text/javascript" charset="utf-8" src="https://secure.polldaddy.com/p/10179437.js"></script><noscript><a href="https://poll.fm/10179437">Why are you deactivating Email Subscribers</a></noscript>';
-	$plugin_name	 = 'Email Subscribers';
-
-    new deactivationSurvey($script, $link_form, $link_form_js, $slug, $plugin_name);
-}
