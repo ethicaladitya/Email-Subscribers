@@ -43,7 +43,6 @@ class es_cls_sendmail {
 					$post_id = $post_id;
 				}
 			}
-			
 
 			$notification = es_cls_notification::es_notification_prepare($post_id);
 			if ( count($notification) > 0 ) {
@@ -286,12 +285,12 @@ class es_cls_sendmail {
 				$post_title = get_the_title( $post );
 				$blog_charset = get_option( 'blog_charset' );
 				// using html_entity_decode() because get_the_title() doesn't handle special characters.
-				
+				$post_title = html_entity_decode( $post_title, ENT_QUOTES, $blog_charset );
 				$subject = str_replace('{{POSTTITLE}}', $post_title, $subject);
+
 				$post_link = get_permalink($post_id);
 				$subject = str_replace('{{POSTLINK}}', $post_link, $subject);
 				$post_date = $post->post_modified;
-				$subject = strip_tags($subject);
 
 				// Get full post
 				$post_full = $post->post_content;
@@ -372,8 +371,7 @@ class es_cls_sendmail {
 		if(count($subscribers) > 0) {
 			foreach ($subscribers as $subscriber) {
 				$to = $subscriber['es_email_mail'];
-				$name = $subscriber['es_email_name'];
-
+				$name = stripslashes($subscriber['es_email_name']);
 
 				//Get Unsubscribe link
 				$dbid = (!empty($subscriber["es_email_id"])) ? $subscriber["es_email_id"] : '';
@@ -437,6 +435,7 @@ class es_cls_sendmail {
 
 							$viewstslink = str_replace("{{DELVIID}}", $returnid, $viewstatus);
 							$content_send = str_replace("{{EMAIL}}", $subscriber["es_email_mail"], $content);
+							stripslashes($subscriber["es_email_mail"]);
 							$content_send = str_replace("{{NAME}}", $subscriber["es_email_name"], $content_send);
 
 							if ( $settings['ig_es_emailtype'] == "WP HTML MAIL" || $settings['ig_es_emailtype'] == "PHP HTML MAIL" ) {
